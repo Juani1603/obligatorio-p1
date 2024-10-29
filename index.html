@@ -1,15 +1,83 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Obligatorio P1</title>
 </head>
-<body>
-    
-    <h1>hola</h1>
 
-    <h2>Hola de nuevo</h2>
-    <h3>hola de nuevo nuevo</h3>
+<body>
+
+    <div id="contenedor">
+        <header>
+            <img id="logo"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBRWovuUPFEU2kx5mlt5sjfigAccmFr8Jq8w&s"
+                alt="logo" />
+            <nav>
+                <ul id="navPrincipal">
+                    <li>
+                        <a>Sección 1</a>
+                    </li>
+                    <li>
+                        <a>Sección 2</a>
+                    </li>
+                    <li>
+                        <a>Sección 3</a>
+                    </li>
+                    <li>
+                        <a>Sección 4</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section id="register" class="seccion">
+                <h2>Regístrese</h2>
+                <label for="txtNombre">Ingrese su nombre:</label>
+                <input type="text" id="txtNombre" required><br>
+
+                <label for="txtApellido">Ingrese su apellido:</label>
+                <input type="text" id="txtApellido" required><br>
+
+                <label for="txtUsuario">Ingrese su nombre de usuario</label>
+                <input type="text" id="txtUsuario" required><br>
+
+                <label for="txtPassword">Ingrese su contraseña</label>
+                <input type="password" id="txtPassword" required><br>
+
+                <label for="txtTarjeta">Digíte su número de tarjeta de crédito:</label>
+                <input type="text" id="txtTarjeta" required><br>
+
+                <label for="txtCvc">Digíte su cvc:</label>
+                <input type="text" id="txtCvc" required><br>
+
+                <input type="button" value="Registrarse" id="btnRegistrarse">
+            </section>
+
+            <section id="login" class="seccion">
+                <h2>Bienvenido</h2>
+                <label for="txtUsuarioLogin">Ingrese su nombre de usuario</label>
+                <input type="text" id="txtUsuarioLogin" required><br>
+
+                <label for="txtPasswordLogin">Ingrese su contraseña</label>
+                <input type="password" id="txtPasswordLogin" required><br>
+
+                <input type="button" value="Ingresar" id="btnLogin">
+            </section>
+        </main>
+        <!-- FIN CONTENIDO -->
+        <footer>
+            <a href="https://www.ort.edu.uy">Footer</a>
+        </footer>
+        <!-- FIN PIE -->
+    </div>
+    <!-- FIN CONTENEDOR -->
+
+    <script src="js/biblioteca.js"></script>
+    <script src="js/script.js"></script>
 </body>
+
 </html>
