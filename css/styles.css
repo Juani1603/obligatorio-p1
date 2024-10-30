@@ -53,9 +53,20 @@ h4 {
 #navPrincipal li {
   list-style-type: none;
   padding: 10px;
-  margin: 5px;
+  margin-left: 5px;
+  margin-top: 25px;
+  margin-right: 10px;
   float: left;
 }
+
+#navPrincipal li a {
+  font-size: 16px;
+  align-items: center;
+}
+.boton {
+  cursor: pointer;
+}
+
 
 header img {
   margin: 20px;
@@ -74,7 +85,8 @@ header img {
   color: #c0ca33;
 }
 
-#login, #register {
+#seccionRegistro, #seccionLogin,
+#seccionAgregar {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -153,7 +165,7 @@ select {
   background-clip: padding-box;
   border: 1.5px solid #4a5a70;
   border-radius: 0.25rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: h-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 /* area de texto */

@@ -17,24 +17,43 @@
                 alt="logo" />
             <nav>
                 <ul id="navPrincipal">
-                    <li>
-                        <a>Sección 1</a>
+                    <li class="boton invitado register" id="btnSeccionRegistro">
+                        <a>Registrarse</a>
                     </li>
-                    <li>
-                        <a>Sección 2</a>
+                    <li class="boton invitado login" id="btnSeccionLogin">
+                        <a>Ingresar</a>
                     </li>
-                    <li>
-                        <a>Sección 3</a>
+                    <li class="boton admin" id="btnSeccionAgregar">
+                        <a>Agregar Destinos</a>
                     </li>
-                    <li>
-                        <a>Sección 4</a>
+                    <li class="boton admin" id="btnSeccionListar">
+                        <a>Listar Reservas</a>
+                    </li>
+                    <li class="boton admin" id="btnSeccionGestionar">
+                        <a>Gestionar Destinos</a>
+                    </li>
+                    <li class="boton admin" id="btnSeccionGanancias">
+                        <a>Generar Informe Ganancias</a>
+                    </li>
+                    <li class="boton cliente" id="btnSeccionExplorar">
+                        <a>Explorar Destinos</a>
+                    </li>
+                    <li class="boton cliente" id="btnSeccionReserva">
+                        <a>Reservar</a>
+                    </li>
+                    <li class="boton cliente" id="btnSeccionHistorial">
+                        <a>Historial Reservas</a>
+                    </li>
+                    <li class="boton cliente" id="btnSeccionOfertas">
+                        <a>Destinos en Oferta</a>
                     </li>
                 </ul>
             </nav>
         </header>
 
         <main>
-            <section id="register" class="seccion">
+            <!--Registrarse -->
+            <section id="seccionRegistro" class="seccion">
                 <h2>Regístrese</h2>
                 <label for="txtNombre">Ingrese su nombre:</label>
                 <input type="text" id="txtNombre" required><br>
@@ -55,17 +74,42 @@
                 <input type="text" id="txtCvc" required><br>
 
                 <input type="button" value="Registrarse" id="btnRegistrarse">
+
+                <p>¿Ya registrado? <a class="boton invitado login" id="btnSeccionLogin">Inicie sesión</a></p>
             </section>
 
-            <section id="login" class="seccion">
+            <!--Ingresar -->
+            <section id="seccionLogin" class="seccion">
                 <h2>Bienvenido</h2>
                 <label for="txtUsuarioLogin">Ingrese su nombre de usuario</label>
-                <input type="text" id="txtUsuarioLogin" required><br>
+                <input type="text" id="txtUsuarioLogin" value="administrador1" required><br>
 
                 <label for="txtPasswordLogin">Ingrese su contraseña</label>
-                <input type="password" id="txtPasswordLogin" required><br>
+                <input type="password" id="txtPasswordLogin" value="Admin1" required><br>
 
                 <input type="button" value="Ingresar" id="btnLogin">
+            </section>
+
+            <!--Agregar Destino -->
+            <section id="seccionAgregar" class="seccion">
+                <h2>Agregar Destino</h2>
+                <label for="txtDesitno">Ingrese el nombre del desitno</label>
+                <input type="text" id="txtDesitno"><br>
+
+                <label for="txtPrecio">Ingrese el precio por persona ($)</label>
+                <input type="text" id="txtPrecio"><br>
+
+                <label for="txtDescripcion">Descripcion del destino</label>
+                <textarea id="txtDescripcion" cols="20" rows="5"></textarea>
+
+                <label for="txtUrl">Url de la imagen:</label>
+                <input type="text" id="txtUrl"><br>
+
+                <label for="txtCupos">Digite cantidad de cupos disponibles:</label>
+                <input type="text" id="txtCupos"><br>
+
+                <input type="button" value="Agregar Destino" id="btnAgregarDestino">
+                <p id="pError"></p>
             </section>
         </main>
         <!-- FIN CONTENIDO -->
