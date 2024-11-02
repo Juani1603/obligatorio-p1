@@ -93,8 +93,8 @@
             <!--Agregar Destino -->
             <section id="seccionAgregar" class="seccion">
                 <h2>Agregar Destino</h2>
-                <label for="txtDesitno">Ingrese el nombre del desitno</label>
-                <input type="text" id="txtDesitno"><br>
+                <label for="txtDestino">Ingrese el nombre del desitno</label>
+                <input type="text" id="txtDestino"><br>
 
                 <label for="txtPrecio">Ingrese el precio por persona ($)</label>
                 <input type="text" id="txtPrecio"><br>
@@ -109,8 +109,38 @@
                 <input type="text" id="txtCupos"><br>
 
                 <input type="button" value="Agregar Destino" id="btnAgregarDestino">
-                <p id="pError"></p>
+                <p id="pErrorAgregar"></p>
             </section>
+
+            <!--Listar reservas (STAND BY)-->
+            <section id="seccionListar" class="seccion"></section>
+
+            <!--Gestionar Destinos y Ofertas-->
+            <section id="seccionGestionar" class="seccion">
+                <input type="button" value="mostrar lista" id="btnMostrar">
+                <h3>Gestionar Destinos y Ofertas</h3>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Nombre</th>
+                      <th>Precio</th>
+                      <th>Descripción</th>
+                      <th>Imagen</th>
+                      <th>Cupos</th>
+                      <th>Oferta</th>
+                      <th>Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblDestinos">
+        
+                  </tbody>
+                </table>
+
+                <p id="pErrorGestionar"></p>
+
+            </section>
+
+
         </main>
         <!-- FIN CONTENIDO -->
         <footer>
