@@ -1,3 +1,6 @@
+//ARREGLAR PROPIEDADES DE CLASE
+//IMPLEMENTAR DATA-ID EN EL FOR LOOP
+
 class Reserva {
     constructor(cantPersonas, metodoPago) {
         this.cantPersonas = cantPersonas;
@@ -30,13 +33,13 @@ class Usuario {
 
 class Admin extends Usuario {
     constructor(id, nombreUsuario, password) {
-        super(id, "admin", nombreUsuario, password);
+        super(id, nombreUsuario, password);
     }
 }
 
 class Cliente extends Usuario {
     constructor(id, nombreUsuario, password, saldo, tarjeta, cvc, millas) {
-        super(id, "cliente", nombreUsuario, password);
+        super(id, nombreUsuario, password);
         this.saldo = saldo;
         this.tarjeta = tarjeta;
         this.cvc = cvc;
@@ -51,7 +54,7 @@ class Sistema {
     constructor() {
         this.usuarioLogeado = null;
         this.usuarios = [
-            new Admin(0, "admin", "administrador1", "Admin1",),
+            new Admin(0, "admin", "administrador1", "Admin1"),
             new Admin(1, "admin", "administrador2", "Admin2",),
             new Admin(2, "admin", "administrador3", "Admin3"),
             new Admin(3, "admin", "administrador4", "Admin4",),
@@ -146,12 +149,20 @@ function ocultarSecciones() {
 document.querySelector("#btnLogin").addEventListener("click", login);
 
 function login() {
+    
     let user = document.querySelector("#txtUsuarioLogin").value;
     let pass = document.querySelector("#txtPasswordLogin").value;
 
     for (let i = 0; i < sistema.usuarios.length; i++) {
         const usuario = sistema.usuarios[i];
+        console.log(usuario);
+        console.log("usuario.nombreUsuario",usuario.nombreUsuario);
+        console.log(usuario.password);
+        
+        
         if (usuario.nombreUsuario === user && usuario.password === pass) {
+            
+            
             switch (usuario.tipoUsuario) {
                 case "admin":
                     ocultarSecciones()
@@ -245,7 +256,7 @@ function gestionarDestinos() {
                       <td>${destino.precio}</td>
                       <td><p>${destino.descripcion}</p></td>
                       <td><img src="${destino.url}" alt="prueba"></td>
-                      <td class="cupos"><input type="text" value="${destino.cupos}" class="inpCupos"></td>
+                      <td class="cupos"><span>${destino.cupos}</span><input type="text" value="" class="inpCupos" data-id="destino.id"></td>
                       <td><input type="checkbox" name="" id=""></td>
                       <td style="color: ${color};">${destino.estado}</td>
                       <td><input type="button" value="Acción" /></td>
