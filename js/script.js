@@ -1,5 +1,5 @@
-//ARREGLAR PROPIEDADES DE CLASE
-//IMPLEMENTAR DATA-ID EN EL FOR LOOP
+//RESOLVER FUNCION DE ACTIVAR Y DESACTIVAR DESTINOS
+//RESOLVER CHECKBOX DE DESCUENTO
 
 class Reserva {
     constructor(cantPersonas, metodoPago) {
@@ -20,7 +20,7 @@ class Destino {
     }
 }
 
-let idUsuario = 0;
+
 
 class Usuario {
     constructor(id, tipoUsuario, nombreUsuario, password) {
@@ -33,13 +33,13 @@ class Usuario {
 
 class Admin extends Usuario {
     constructor(id, nombreUsuario, password) {
-        super(id, nombreUsuario, password);
+        super(id, "admin", nombreUsuario, password);
     }
 }
 
 class Cliente extends Usuario {
     constructor(id, nombreUsuario, password, saldo, tarjeta, cvc, millas) {
-        super(id, nombreUsuario, password);
+        super(id, "cliente", nombreUsuario, password);
         this.saldo = saldo;
         this.tarjeta = tarjeta;
         this.cvc = cvc;
@@ -50,20 +50,22 @@ class Cliente extends Usuario {
 
 let idDestino = 11;
 
+let idUsuario = 10;
+
 class Sistema {
     constructor() {
         this.usuarioLogeado = null;
         this.usuarios = [
-            new Admin(0, "admin", "administrador1", "Admin1"),
-            new Admin(1, "admin", "administrador2", "Admin2",),
-            new Admin(2, "admin", "administrador3", "Admin3"),
-            new Admin(3, "admin", "administrador4", "Admin4",),
-            new Admin(4, "admin", "administrador5", "Admin5",),
-            new Cliente(5, "cliente", "cliente1", "Cliente1", 15000, "1111-2222-3333-4444", 455, 0),
-            new Cliente(6, "cliente", "cliente2", "Cliente2", 15000, "1234-4321-433-422", 323, 0),
-            new Cliente(7, "cliente", "cliente3", "Cliente3", 15000, "4231-532-8638-9740", 444, 0),
-            new Cliente(8, "cliente", "cliente4", "Cliente4", 15000, "0023-2315-5734-5734", 999, 0),
-            new Cliente(9, "cliente", "cliente5", "Cliente5", 15000, "8493-4763-5483-8473", 747, 0),
+            new Admin(0, "administrador1", "Admin1"),
+            new Admin(1, "administrador2", "Admin2",),
+            new Admin(2, "administrador3", "Admin3"),
+            new Admin(3, "administrador4", "Admin4",),
+            new Admin(4, "administrador5", "Admin5",),
+            new Cliente(5, "cliente1", "Cliente1", 15000, "1111-2222-3333-4444", 455, 0),
+            new Cliente(6, "cliente2", "Cliente2", 15000, "1234-4321-433-422", 323, 0),
+            new Cliente(7, "cliente3", "Cliente3", 15000, "4231-532-8638-9740", 444, 0),
+            new Cliente(8, "cliente4", "Cliente4", 15000, "0023-2315-5734-5734", 999, 0),
+            new Cliente(9, "cliente5", "Cliente5", 15000, "8493-4763-5483-8473", 747, 0),
         ]
         this.destinos = [
             new Destino(0, "Estados Unidos", 25000, "Pais americano", "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/1920px-Flag_of_the_United_States.svg.png", 20, "Activo"),
@@ -98,7 +100,6 @@ let sistema = new Sistema();
 
 ocultarSecciones();
 mostrarBotones("invitado");
-cambiarSeccion("seccionGestionar");
 
 let botones = document.querySelectorAll(".boton");
 for (let i = 0; i < botones.length; i++) {
@@ -146,37 +147,90 @@ function ocultarSecciones() {
     }
 }
 
+document.querySelector("#btnRegistrarse").addEventListener("click", registrarse);
+
+function registrarse() {
+    let nombre = document.querySelector("#txtNombre").value;
+    let apellido = document.querySelector("#txtApellido").value;
+    let nombreUsuario = document.querySelector("#txtUsuario").value;
+    let password = document.querySelector("#txtPassword").value;
+    let tarjeta = document.querySelector("#txtTarjeta").value;
+    let cvc = Number(document.querySelector("#txtCvc").value);
+
+    if (nombre !== "" & apellido !== "" && nombreUsuario !== "" && password !== "" && tarjeta !== "") {
+        if (obtenerElemento(sistema.usuarios, "nombreUsuario", nombreUsuario)) {
+            document.querySelector("#pErrorRegistro").innerHTML = "El usuario ya está registrado.";
+            return;
+        }
+    } else {
+        document.querySelector("#pErrorRegistro").innerHTML = "Todos los campos son obligatorios";
+    }
+
+    if (password.length < 5) {
+        document.querySelector("#pErrorRegistro").innerHTML = "La contraseña debe tener al menos una mayúscula.";
+        return;
+    }
+
+    let tieneMayus = false;
+    let tieneMinus = false;
+    let tieneNum = false;
+
+    for (let i = 0; i < password.length; i++) {
+        const letra = password[i];
+        
+        if (letra.charCodeAt() >= 65 && letra.charCodeAt() <= 90){
+            tieneMayus = true;
+        } else if (letra.charCodeAt() >= 97 && letra.charCodeAt() <= 121) {
+            tieneMinus = true;
+        } else if (letra.charCodeAt() >= 48 && letra.charCodeAt() <= 57) {
+            tieneNum = true;
+        }
+
+        if (tieneMayus && tieneMinus && tieneNum) {
+            break;
+        }
+    }
+
+    if (!tieneMayus || !tieneMinus || !tieneNum) {
+        document.querySelector("#pErrorRegistro").innerHTML = "La contraseña debe contener al menos una mayúscula, una minúscula y un número.";
+    }
+
+    if (!algoritmoLuhn(tarjeta)) {
+        document.querySelector("#pErrorRegistro").innerHTML = "Número de tarjeta inválido.";
+        return;
+    } else if (isNaN(cvc) || cvc.toString().length !== 3) {
+        document.querySelector("#pErrorRegistro").innerHTML = "CVC inválido.";
+        return;
+    } else {
+        sistema.usuarios.push(new Cliente(idUsuario++, nombreUsuario, password, 15000, tarjeta, cvc, 0));
+        document.querySelector("#pErrorRegistro").innerHTML = "Usuario registrado correctamente";
+        mostrarBotones("invitado")
+        return;
+    }
+}
+
+
+
 document.querySelector("#btnLogin").addEventListener("click", login);
 
 function login() {
-    
     let user = document.querySelector("#txtUsuarioLogin").value;
     let pass = document.querySelector("#txtPasswordLogin").value;
 
     for (let i = 0; i < sistema.usuarios.length; i++) {
         const usuario = sistema.usuarios[i];
-        console.log(usuario);
-        console.log("usuario.nombreUsuario",usuario.nombreUsuario);
-        console.log(usuario.password);
-        
-        
         if (usuario.nombreUsuario === user && usuario.password === pass) {
-            
-            
-            switch (usuario.tipoUsuario) {
-                case "admin":
-                    ocultarSecciones()
-                    mostrarBotones("admin");
-                    sistema.usuarioLogeado = usuario;
-                    break;
-                case "cliente":
-                    ocultarSecciones()
-                    mostrarBotones("cliente");
-                    sistema.usuarioLogeado = usuario;
-            }
+            ocultarSecciones();
+            mostrarBotones(usuario.tipoUsuario);
+            sistema.usuarioLogeado = usuario;
+            return;
+        } else {
+            document.querySelector("#pErrorLogin").innerHTML = "El usuario o la contraseña son incorrectos.";
         }
     }
 }
+
+//Funcionalidades ADMIN
 
 document.querySelector("#btnAgregarDestino").addEventListener("click", agregarDestinos);
 
@@ -253,16 +307,16 @@ function gestionarDestinos() {
         }
         document.querySelector("#tblDestinos").innerHTML += `<tr>
                       <td> ${destino.nombre}</td>
-                      <td>${destino.precio}</td>
+                      <td class="precioDescuento" data-precio="${destino.precio}">$ ${destino.precio}</td>
                       <td><p>${destino.descripcion}</p></td>
                       <td><img src="${destino.url}" alt="prueba"></td>
-                      <td class="cupos"><span>${destino.cupos}</span><input type="text" value="" class="inpCupos" data-id="destino.id"></td>
-                      <td><input type="checkbox" name="" id=""></td>
-                      <td style="color: ${color};">${destino.estado}</td>
-                      <td><input type="button" value="Acción" /></td>
+                      <td class="cupos"><span>${destino.cupos}</span><input type="number" value="" class="inpCupos" data-id="${destino.id}"></td>
+                      <td><input type="checkbox" name="" id="" class="checkbox" data-id="${destino.id}"></td>
+                      <td style="color: ${color};" class="estadoDestino">${destino.estado}</td>
+                      <td><input type="button" value="Activar" class="btnActivar" /></td><br>
+                      <td><input type="button" value="Pausar" class="btnPausar" /></td>
                     </tr>`;
     }
-
 
     //Agregar evento de focus a cada input de cupos
     let inputs = document.querySelectorAll(".inpCupos");
@@ -274,27 +328,104 @@ function gestionarDestinos() {
         });
     }
 
-    function agregarBoton(cuposCelda, idDestino, inputCupos) {
+    function agregarBoton(cuposCelda, idDestino) {
         cuposCelda.innerHTML += `<br><input type="button" value="+ Agregar cupos" class="btnAgregarCupos"></td>`;
 
-        let botonCupos = cuposCelda.querySelector(".btnAgregarCupos:last-child");
+        let botonCupos = cuposCelda.querySelector(".btnAgregarCupos");
         botonCupos.addEventListener("click", function () {
-            agregarCupos(idDestino, inputCupos);
+            agregarCupos(idDestino);
         })
     }
 }
 
 
-function agregarCupos(idDestino, inputCupos) {
-    let cupos = Number(inputCupos.value);
+function agregarCupos(idDestino) {
+    let cupos = Number(document.querySelector(`.inpCupos[data-id="${idDestino}"]`).value);
     let destino = obtenerElemento(sistema.destinos, "id", idDestino);
 
-
-    if (cupos <= 0) {
+    if (isNaN(cupos) || cupos <= 0) {
         document.querySelector("#pErrorGestionar").innerHTML = "El campo de cupos debe ser un valor numérico positivo.";
         return;
     }
 
-    sistema.aumentarCupos(destino.id, cupos);
-    document.querySelector("#pErrorGestionar").innerHTML = "Cupos agregados exitosamente.";
-}   
+    if (destino) {
+        sistema.aumentarCupos(destino.id, cupos);
+        document.querySelector("#pErrorGestionar").innerHTML = "Cupos agregados exitosamente.";
+
+        let celdas = document.querySelectorAll("td");
+        for (let i = 0; i < celdas.length; i++) {
+            const celda = celdas[i];
+            if (celda.querySelector(`.inpCupos[data-id="${idDestino}"]`)) {
+                celda.querySelector("span").innerHTML = destino.cupos;
+                document.querySelector(`.inpCupos[data-id="${idDestino}"]`).value = "";
+                break;
+            }
+        }
+    }
+}
+
+//EN STANDBY HASTA EL MIERCOLES
+function aplicarDescuento(idDestino, precio) {
+    let checkbox = document.querySelector(`.checkbox[data-id="${idDestino}"]`);
+    let precioCelda = document.querySelector(`.precioDescuento[data-precio="${precio}"]`);
+    let precioOriginal = Number(precioCelda.getAttribute("data-precio"));
+    let precioDescuento = 0;
+
+    if (checkbox.checked) {
+        precioDescuento = precioOriginal * 0.8;
+        precioCelda.innerHTML = precioDescuento;
+    }
+}
+
+let checkboxes = document.querySelectorAll(".checkbox");
+for (let i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].addEventListener("change", function () {
+        aplicarDescuento(this.getAttribute("data-id"), this.getAttribute("data-precio"));
+    })
+
+}
+
+
+/* document.querySelector(".btnActivar").addEventListener("click", cambiarEstado);
+document.querySelector(".btnPausar").addEventListener("click", cambiarEstado);
+
+function cambiarEstado() {
+    let estado = document.querySelector(".estadoDestino");
+
+    switch(estado){
+        case "Activo":
+            document.querySelector(".estadoDestino").innerHTML = "Pausado";
+            break;
+        case "Pausado":
+            document.querySelector(".estadoDestino").innerHTML = "Activo";
+            break;            
+    }
+}
+ */
+
+//Funcionalidades CLIENTE
+
+document.querySelector("#btnExplorar").addEventListener("click", explorarDestinos);
+
+function explorarDestinos() {
+
+    document.querySelector("#tblDestinos").innerHTML = "";
+
+    for (let i = 0; i < sistema.destinos.length; i++) {
+        const destino = sistema.destinos[i];
+        
+        if (destino.estado === "Activ") {
+            document.querySelector("#tblExplorar").innerHTML += `<tr>
+                      <td>${destino.nombre}</td>
+                      <td><p>${destino.descripcion}</p></td>
+                      <td>$ ${destino.precio}</td>
+                      <td>---</td>
+                      <td><img src="${destino.url}" alt="prueba"></td>
+                      <td><input type="button" value="Reservar" class="btnReservar"></td>
+                    </tr>`;
+        }
+        
+    }
+}
+
+

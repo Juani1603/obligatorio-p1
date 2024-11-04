@@ -56,22 +56,24 @@
             <section id="seccionRegistro" class="seccion">
                 <h2>Regístrese</h2>
                 <label for="txtNombre">Ingrese su nombre:</label>
-                <input type="text" id="txtNombre" required><br>
+                <input type="text" id="txtNombre" value="prueba" required><br>
 
                 <label for="txtApellido">Ingrese su apellido:</label>
-                <input type="text" id="txtApellido" required><br>
+                <input type="text" id="txtApellido" value="apellido" required><br>
 
                 <label for="txtUsuario">Ingrese su nombre de usuario</label>
-                <input type="text" id="txtUsuario" required><br>
+                <input type="text" id="txtUsuario" value="usuarioPrueba" required><br>
 
                 <label for="txtPassword">Ingrese su contraseña</label>
-                <input type="password" id="txtPassword" required><br>
+                <input type="password" id="txtPassword" value="Hola123" required><br>
 
                 <label for="txtTarjeta">Digíte su número de tarjeta de crédito:</label>
-                <input type="text" id="txtTarjeta" required><br>
+                <input type="text" id="txtTarjeta" value="4485746493384014" required><br>
 
                 <label for="txtCvc">Digíte su cvc:</label>
-                <input type="text" id="txtCvc" required><br>
+                <input type="text" id="txtCvc" value="842" required><br>
+
+                <p id="pErrorRegistro"></p>
 
                 <input type="button" value="Registrarse" id="btnRegistrarse">
 
@@ -82,18 +84,20 @@
             <section id="seccionLogin" class="seccion">
                 <h2>Bienvenido</h2>
                 <label for="txtUsuarioLogin">Ingrese su nombre de usuario</label>
-                <input type="text" id="txtUsuarioLogin" value="administrador1" required><br>
+                <input type="text" id="txtUsuarioLogin" value="cliente1" required><br>
 
                 <label for="txtPasswordLogin">Ingrese su contraseña</label>
-                <input type="password" id="txtPasswordLogin" value="Admin1" required><br>
+                <input type="password" id="txtPasswordLogin" value="Cliente1" required><br>
 
+                <p id="pErrorLogin"></p>
                 <input type="button" value="Ingresar" id="btnLogin">
             </section>
 
+            <!--ADMIN-->    
             <!--Agregar Destino -->
             <section id="seccionAgregar" class="seccion">
                 <h2>Agregar Destino</h2>
-                <label for="txtDestino">Ingrese el nombre del desitno</label>
+                <label for="txtDestino">Ingrese el nombre del destino</label>
                 <input type="text" id="txtDestino"><br>
 
                 <label for="txtPrecio">Ingrese el precio por persona ($)</label>
@@ -119,6 +123,7 @@
             <section id="seccionGestionar" class="seccion">
                 <input type="button" value="mostrar lista" id="btnMostrar">
                 <h3>Gestionar Destinos y Ofertas</h3>
+                <p id="pErrorGestionar"></p>
                 <table>
                   <thead>
                     <tr>
@@ -135,11 +140,28 @@
         
                   </tbody>
                 </table>
-
-                <p id="pErrorGestionar"></p>
-
             </section>
 
+            <!--Generar informe de ganancias (STAND BY)-->
+            <section id="seccionGanancias"></section>
+
+            <!--Explorar Destinos-->
+            <section id="seccionExplorar" class="seccion">
+                <input type="button" value="mostrar lista" id="btnExplorar">
+                <h3>Explorar Destinos</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Precio</th>
+                            <th>Oferta</th>
+                            <th>Imagen</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblExplorar"></tbody>
+                </table>
+            </section>
 
         </main>
         <!-- FIN CONTENIDO -->

@@ -55,7 +55,7 @@ h4 {
   text-align: center;
 }
 
-#tblDestinos  .cupos input[type="text"]{
+#tblDestinos .cupos input[type="text"]{
   height: 20%;
   justify-content: center;
   text-align: center;
@@ -63,7 +63,7 @@ h4 {
 }
 
 #tblDestinos .cupos span {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
 }
 
@@ -116,7 +116,8 @@ header img {
 }
 
 #seccionRegistro, #seccionLogin,
-#seccionAgregar, #seccionGestionar {
+#seccionAgregar, #seccionGestionar,
+#seccionExplorar {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -161,16 +162,64 @@ table img {
   max-width: 100px;
 }
 
-td > input[type="button"] {
-  max-width: 120px;
-  font-size: 10px;
-  height: 30px;
+td > input[type="button"].btnAgregarCupos:hover {
+  background-color: #026fb7;
+  color: white;
 }
 
+td > input[type="button"].btnActivar, td >  input[type="button"].btnPausar {
+  width: 80px;
+  font-size: 10px;
+}
+
+td > input[type="button"].btnActivar {
+  color: green;
+  border: 2px solid green;
+}
+
+td > input[type="button"].btnActivar:hover {
+  color: white;
+  background-color: green;
+}
+
+input[type="button"].btnPausar {
+  color: rgb(43, 40, 40);
+  border: 2px solid rgb(43, 40, 40);
+}
+
+input[type="button"].btnPausar:hover {
+  color: white;
+  background-color: rgb(43, 40, 40);
+  border: none;
+}
+
+
+td > input[type="button"] {
+  max-width: 120px;
+  font-size: 8px;
+  height: 30px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+
 td > input[type="text"] {
-  max-width: 20px;
+  max-width: 25px;
   font-size: 15px;
 }
+
+input.inpCupos {
+  max-width: 20px;
+  margin: 0 auto;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+input[type=number] { -moz-appearance:textfield; }
 
 table tr:nth-child(odd) td {
   background-color: #ececec;
@@ -212,21 +261,11 @@ select {
 /* boton */
 input[type="button"],
 button {
-  background-color: #002e4a;
-  color: #fafafa;
-  border: 1px solid rgb(0, 58, 117);
-  border-radius: 6px;
-  min-width: 100px;
-  height: 35px;
+
   text-transform: uppercase;
   cursor: pointer;
 }
 
-input[type="button"]:hover {
-  background-color: #c0ca33;
-  border: 1px solid #eefe00;
-  color: #fafafa;
-}
 
 input[type="button"]:disabled {
   background-color: lightgray;
