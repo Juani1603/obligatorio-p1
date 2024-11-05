@@ -20,7 +20,21 @@ main {
   padding: 20px;
 }
 
+.hover {
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.hover:hover{
+  color: white;
+  background-color: #026fb7;
+}
+
 /* Titulos */
+h1{
+  font-size: 35px;
+}
+
 h1,
 h2,
 h3,
@@ -117,7 +131,9 @@ header img {
 
 #seccionRegistro, #seccionLogin,
 #seccionAgregar, #seccionGestionar,
-#seccionExplorar {
+#seccionExplorar, #seccionBienvenida,
+#seccionReservar, #seccionGanancias,
+#seccionListar {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -261,7 +277,6 @@ select {
 /* boton */
 input[type="button"],
 button {
-
   text-transform: uppercase;
   cursor: pointer;
 }

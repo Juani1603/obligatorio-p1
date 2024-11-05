@@ -12,9 +12,15 @@
 
     <div id="contenedor">
         <header>
-            <img id="logo"
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBRWovuUPFEU2kx5mlt5sjfigAccmFr8Jq8w&s"
-                alt="logo" />
+            <ul>
+                <li class="boton admin cliente" id="btnSeccionBienvenida">
+                    <a>
+                        <img id="logo"
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBRWovuUPFEU2kx5mlt5sjfigAccmFr8Jq8w&s"
+                            alt="logo" /></a>
+                </li>
+            </ul>
+
             <nav>
                 <ul id="navPrincipal">
                     <li class="boton invitado register" id="btnSeccionRegistro">
@@ -37,9 +43,6 @@
                     </li>
                     <li class="boton cliente" id="btnSeccionExplorar">
                         <a>Explorar Destinos</a>
-                    </li>
-                    <li class="boton cliente" id="btnSeccionReserva">
-                        <a>Reservar</a>
                     </li>
                     <li class="boton cliente" id="btnSeccionHistorial">
                         <a>Historial Reservas</a>
@@ -84,16 +87,22 @@
             <section id="seccionLogin" class="seccion">
                 <h2>Bienvenido</h2>
                 <label for="txtUsuarioLogin">Ingrese su nombre de usuario</label>
-                <input type="text" id="txtUsuarioLogin" value="cliente1" required><br>
+                <input type="text" id="txtUsuarioLogin" value="administrador1" required><br>
 
                 <label for="txtPasswordLogin">Ingrese su contraseña</label>
-                <input type="password" id="txtPasswordLogin" value="Cliente1" required><br>
+                <input type="password" id="txtPasswordLogin" value="Admin1" required><br>
 
                 <p id="pErrorLogin"></p>
-                <input type="button" value="Ingresar" id="btnLogin">
+                <input type="button" value="Ingresar" id="btnLogin" class="hover">
             </section>
 
-            <!--ADMIN-->    
+            <!--Bienvenida-->
+            <section id="seccionBienvenida" class="seccion">
+                <h1 id="msjLogin"></h1>
+                <p id="pBienvenida"></p>
+            </section>
+
+            <!--ADMIN-->
             <!--Agregar Destino -->
             <section id="seccionAgregar" class="seccion">
                 <h2>Agregar Destino</h2>
@@ -112,42 +121,73 @@
                 <label for="txtCupos">Digite cantidad de cupos disponibles:</label>
                 <input type="text" id="txtCupos"><br>
 
-                <input type="button" value="Agregar Destino" id="btnAgregarDestino">
+                <input type="button" value="Agregar Destino" id="btnAgregarDestino" class="hover">
                 <p id="pErrorAgregar"></p>
             </section>
 
-            <!--Listar reservas (STAND BY)-->
-            <section id="seccionListar" class="seccion"></section>
-
-            <!--Gestionar Destinos y Ofertas-->
-            <section id="seccionGestionar" class="seccion">
-                <input type="button" value="mostrar lista" id="btnMostrar">
-                <h3>Gestionar Destinos y Ofertas</h3>
-                <p id="pErrorGestionar"></p>
+            <!--Listar reservas-->
+            <section id="seccionListar" class="seccion">
+                <h3>Listar reservas pendientes, aprobadas y rechazadas</h3>
                 <table>
-                  <thead>
-                    <tr>
-                      <th>Nombre</th>
-                      <th>Precio</th>
-                      <th>Descripción</th>
-                      <th>Imagen</th>
-                      <th>Cupos</th>
-                      <th>Oferta</th>
-                      <th>Estado</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tblDestinos">
-        
-                  </tbody>
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Método pago</th>
+                            <th>Cantidad de personas</th>
+                            <th>Destino</th>
+                            <th>Precio</th>
+                            <th>Cupos disponibles</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblListar"></tbody>
                 </table>
             </section>
 
-            <!--Generar informe de ganancias (STAND BY)-->
-            <section id="seccionGanancias"></section>
+            <!--Gestionar Destinos y Ofertas-->
+            <section id="seccionGestionar" class="seccion">
+                <h3>Gestionar Destinos y Ofertas</h3>
+                <p id="pErrorGestionar"></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Descripción</th>
+                            <th>Imagen</th>
+                            <th>Cupos</th>
+                            <th>Oferta</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblDestinos">
 
+                    </tbody>
+                </table>
+            </section>
+
+            <!--Generar informe de ganancias-->
+            <section id="seccionGanancias" class="seccion">
+                <h2>Informe de Ganancias</h2>
+                <h3>Total generado en reservas ($)</h3>
+                <h4 id="totalVentas">$</h4>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Destino</th>
+                            <th>Cupos Totales</th>
+                            <th>Ganancia Total</th>
+                            <th>Ganancia Neta</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblInforme"></tbody>
+                </table>
+            </section>
+
+            <!--CLIENTE-->
             <!--Explorar Destinos-->
             <section id="seccionExplorar" class="seccion">
-                <input type="button" value="mostrar lista" id="btnExplorar">
                 <h3>Explorar Destinos</h3>
                 <table>
                     <thead>
@@ -163,11 +203,24 @@
                 </table>
             </section>
 
+            <!--Reservar destino-->
+            <section id="seccionReservar" class="seccion">
+                <h3>Reservar Destino</h3>
+                <div id="detalleDestino"></div>
+                <select id="slcPago">
+                    <option value="">Seleccione una opción..</option>
+                    <option value="sal">Saldo</option>
+                    <option value="mil">Millas</option>
+                </select><br>
+
+                <input type="button" value="Realizar Reserva" >
+            </section>
+
         </main>
         <!-- FIN CONTENIDO -->
-        <footer>
+        <!-- <footer>
             <a href="https://www.ort.edu.uy">Footer</a>
-        </footer>
+        </footer> -->
         <!-- FIN PIE -->
     </div>
     <!-- FIN CONTENEDOR -->
