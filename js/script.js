@@ -71,7 +71,7 @@ class Sistema {
         ]
         this.destinos = [
             new Destino(0, "Estados Unidos", 25000, "Pais americano", "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/1920px-Flag_of_the_United_States.svg.png", 20, "Activo"),
-            new Destino(1, "España", 15000, "Pais europeo", "google.com", 10, "Activo"),
+            new Destino(1, "Uruguay", 15000, "Pais sudamericano", "https://es.wikipedia.org/wiki/Archivo:Uruguay_River_near_El_Sobrario,_Misiones,_Argentina,_12th._Jan._2011_-_Flickr_-_PhillipC.jpg", 10, "Activo"),
             new Destino(2, "Alemania", 10000, "Pais europeo", "google.com", 100, "Pausado"),
             new Destino(3, "Argentina", 5000, "Pais sudamericano", "google.com", 50, "Pausado"),
             new Destino(4, "Brasil", 12000, "Pais sudamericano", "google.com", 2, "Activo"),
@@ -83,8 +83,8 @@ class Sistema {
             new Destino(10, "Israel", 45000, "Pais asiatico", "google.com", 9, "Activo"),
         ]
         this.reservasPendientes = [
-            new Reserva(this.usuarios[5], 2, "millas", this.destinos[1]),            
-            new Reserva(this.usuarios[8], 1, "saldo", this.destinos[0]),  
+            new Reserva(this.usuarios[5], 2, "millas", this.destinos[1]),
+            new Reserva(this.usuarios[8], 1, "saldo", this.destinos[0]),
         ];
         this.reservas = [];
     }
@@ -168,6 +168,16 @@ class Sistema {
         }
     }
 
+    descuentoFijo(precio, destino) {
+        destino.precio = precio * 0.8;
+        return destino.precio;
+    }
+
+    deshacerDescuento(precio, destino) {
+        destino.precio = precio / 0.8;
+        return destino.precio;
+    }
+
 }
 let sistema = new Sistema();
 
@@ -222,7 +232,7 @@ function cambiarSeccion(idSeccionDestino) {
             break;
         case "seccionListar":
             listarReservas();
-            break;    
+            break;
     }
 }
 
@@ -418,7 +428,7 @@ function gestionarDestinos() {
         }
         document.querySelector("#tblDestinos").innerHTML += `<tr>
                       <td> ${destino.nombre}</td>
-                      <td class="precioDescuento" data-precio="${destino.precio}">$ ${destino.precio}</td>
+                      <td class="precioDescuento" data-idprecio="${destino.id}">$ ${destino.precio}</td>
                       <td><p>${destino.descripcion}</p></td>
                       <td><img src="${destino.url}" alt="prueba"></td>
                       <td class="cupos"><span>${destino.cupos}</span><input type="number" value="" class="inpCupos" data-id="${destino.id}"></td>
@@ -439,14 +449,49 @@ function gestionarDestinos() {
         });
     }
 
-    function agregarBoton(cuposCelda, idDestino) {
-        cuposCelda.innerHTML += `<br><input type="button" value="+ Agregar cupos" class="btnAgregarCupos"></td>`;
 
-        let botonCupos = cuposCelda.querySelector(".btnAgregarCupos");
-        botonCupos.addEventListener("click", function () {
-            agregarCupos(idDestino);
+    //Asignarle evento de click a cada checkbox
+    let checkboxes = document.querySelectorAll(".checkbox");
+    for (let i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].addEventListener("change", function () {
+            const id = this.getAttribute("data-id");
+            aplicarDescuento(sistema.destinos[i].precio, id, this.checked);
         })
     }
+}
+//Aplicar descuento con checkbox
+function aplicarDescuento(precioDestino, idDestino, checkeado) {
+    let precio = obtenerElemento(sistema.destinos, "precio", precioDestino);
+    let destino = obtenerElemento(sistema.destinos, "id", Number(idDestino));
+    let destinoNombre = precio.nombre;
+    let precioCelda = document.querySelector(`.precioDescuento[data-idprecio="${idDestino}"]`);
+    let precioOriginal = Number(precioDestino);
+    console.log(precioOriginal);
+    
+
+    if (checkeado) {
+        sistema.descuentoFijo(precioOriginal, destino);
+        document.querySelector("#pErrorGestionar").innerHTML = `destino ${destinoNombre} ahora está en oferta.`;
+        precioCelda.innerHTML = `${sistema.descuentoFijo(precioOriginal, destino)}`; console.log(sistema.descuentoFijo(precioOriginal, destino));
+    } else {
+        sistema.deshacerDescuento(precioOriginal, destino);
+        document.querySelector("#pErrorGestionar").innerHTML = `destino ${destinoNombre} ya no está en oferta.`;
+        precioCelda.innerHTML = `${sistema.deshacerDescuento(precioOriginal, destino)}`;
+    }
+
+
+
+
+}
+
+//Agregar botón a la celda seleccionada
+function agregarBoton(cuposCelda, idDestino) {
+    cuposCelda.innerHTML += `<br><input type="button" value="+ Agregar cupos" class="btnAgregarCupos"></td>`;
+
+    let botonCupos = cuposCelda.querySelector(".btnAgregarCupos");
+    botonCupos.addEventListener("click", function () {
+        agregarCupos(idDestino);
+    })
 }
 
 
@@ -475,44 +520,28 @@ function agregarCupos(idDestino) {
     }
 }
 
-//EN STANDBY HASTA EL MIERCOLES
-function aplicarDescuento(idDestino, precio) {
-    let checkbox = document.querySelector(`.checkbox[data-id="${idDestino}"]`);
-    let precioCelda = document.querySelector(`.precioDescuento[data-precio="${precio}"]`);
-    let precioOriginal = Number(precioCelda.getAttribute("data-precio"));
-    let precioDescuento = 0;
 
-    if (checkbox.checked) {
-        precioDescuento = precioOriginal * 0.8;
-        precioCelda.innerHTML = precioDescuento;
-    }
-}
-
-let checkboxes = document.querySelectorAll(".checkbox");
-for (let i = 0; i < checkboxes.length; i++) {
-    checkboxes[i].addEventListener("change", function () {
-        aplicarDescuento(this.getAttribute("data-id"), this.getAttribute("data-precio"));
+//Asignarle evento de click a botones "Activar" y "Pausar"
+let botonesEstado = document.querySelectorAll(".btnActivar, .btnPausar");
+for (let i = 0; i < botonesEstado.length; i++) {
+    botonesEstado[i].addEventListener("click", function () {
+        cambiarEstado(botonesEstado[i].getAttribute("value"));
     })
-
 }
 
+//Cambiar estado de destinos
+function cambiarEstado(estadoDestino) {
+    let destino = obtenerElemento(sistema.destinos, "estado", estadoDestino);
 
-/* document.querySelector(".btnActivar").addEventListener("click", cambiarEstado);
-document.querySelector(".btnPausar").addEventListener("click", cambiarEstado);
-
-function cambiarEstado() {
-    let estado = document.querySelector(".estadoDestino");
-
-    switch(estado){
+    switch (destino) {
         case "Activo":
             document.querySelector(".estadoDestino").innerHTML = "Pausado";
             break;
         case "Pausado":
             document.querySelector(".estadoDestino").innerHTML = "Activo";
-            break;            
+            break;
     }
 }
- */
 
 function informeGanancias() {
     document.querySelector("#totalVentas").innerHTML = `$ ${sistema.totalGananciaReservas()}`;
