@@ -198,6 +198,11 @@ td > input[type="button"].btnActivar:hover {
   background-color: green;
 }
 
+td > input[type="button"].btnActivar:hover:disabled {
+  color: inherit;
+  background-color: inherit;
+}
+
 input[type="button"].btnPausar {
   color: rgb(43, 40, 40);
   border: 2px solid rgb(43, 40, 40);
@@ -206,7 +211,11 @@ input[type="button"].btnPausar {
 input[type="button"].btnPausar:hover {
   color: white;
   background-color: rgb(43, 40, 40);
-  border: none;
+}
+
+td > input[type="button"].btnPausar:hover:disabled {
+  color: inherit;
+  background-color: inherit;
 }
 
 
@@ -305,4 +314,17 @@ footer a {
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
+}
+
+
+input[type="button"]:disabled {
+    cursor: not-allowed; 
+    opacity: 0.5; 
+}
+
+input[type="button"]:disabled:hover {
+    background-color: transparent; 
+    color: inherit; 
+    cursor: not-allowed; 
+    opacity: 0.5; 
 }

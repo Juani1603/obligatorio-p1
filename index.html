@@ -127,7 +127,8 @@
 
             <!--Listar reservas-->
             <section id="seccionListar" class="seccion">
-                <h3>Listar reservas pendientes, aprobadas y rechazadas</h3>
+                <h3>Listar reservas</h3>
+                <h4>Reservas Pendientes</h4>
                 <table>
                     <thead>
                         <tr>
@@ -140,7 +141,39 @@
                             <th>Estado</th>
                         </tr>
                     </thead>
-                    <tbody id="tblListar"></tbody>
+                    <tbody id="tblListarPendientes"></tbody>
+                </table>
+
+                <h4>Reservas Aceptadas</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Método pago</th>
+                            <th>Cantidad de personas</th>
+                            <th>Destino</th>
+                            <th>Precio</th>
+                            <th>Cupos disponibles</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblListarAprobadas"></tbody>
+                </table>
+
+                <h4>Reservas Canceladas</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Método pago</th>
+                            <th>Cantidad de personas</th>
+                            <th>Destino</th>
+                            <th>Precio</th>
+                            <th>Cupos disponibles</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblListarCanceladas"></tbody>
                 </table>
             </section>
 

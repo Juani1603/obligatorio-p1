@@ -3,7 +3,8 @@
 //AJUSTAR FOR LOOP EN EXPLORAR DESTINOS()
 
 class Reserva {
-    constructor(cliente, cantPersonas, metodoPago, destino, estado = "pendiente") {
+    constructor(id, cliente, cantPersonas, metodoPago, destino, estado = "pendiente") {
+        this.id = id;
         this.cliente = cliente;
         this.cantPersonas = cantPersonas;
         this.metodoPago = metodoPago;
@@ -51,7 +52,7 @@ class Cliente extends Usuario {
 }
 
 let idDestino = 11;
-
+let idReserva = 2;
 let idUsuario = 10;
 
 class Sistema {
@@ -70,23 +71,27 @@ class Sistema {
             new Cliente(9, "cliente5", "Cliente5", 15000, "8493-4763-5483-8473", 747, 0),
         ]
         this.destinos = [
-            new Destino(0, "Estados Unidos", 25000, "Pais americano", "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/1920px-Flag_of_the_United_States.svg.png", 20, "Activo"),
-            new Destino(1, "Uruguay", 15000, "Pais sudamericano", "https://es.wikipedia.org/wiki/Archivo:Uruguay_River_near_El_Sobrario,_Misiones,_Argentina,_12th._Jan._2011_-_Flickr_-_PhillipC.jpg", 10, "Activo"),
-            new Destino(2, "Alemania", 10000, "Pais europeo", "google.com", 100, "Pausado"),
+            new Destino(0, "Estados Unidos", 2500, "Pais americano", "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/1920px-Flag_of_the_United_States.svg.png", 20, "Activo"),
+            new Destino(1, "Uruguay", 1500, "Pais sudamericano", "https://es.wikipedia.org/wiki/Archivo:Uruguay_River_near_El_Sobrario,_Misiones,_Argentina,_12th._Jan._2011_-_Flickr_-_PhillipC.jpg", 10, "Activo"),
+            new Destino(2, "Alemania", 1000, "Pais europeo", "google.com", 100, "Pausado"),
             new Destino(3, "Argentina", 5000, "Pais sudamericano", "google.com", 50, "Pausado"),
-            new Destino(4, "Brasil", 12000, "Pais sudamericano", "google.com", 2, "Activo"),
+            new Destino(4, "Brasil", 1200, "Pais sudamericano", "google.com", 2, "Activo"),
             new Destino(5, "Chile", 9000, "Pais sudamericano", "google.com", 47, "Pausado"),
             new Destino(6, "Venezuela", 7000, "Pais sudamericano", "google.com", 99, "Activo"),
             new Destino(7, "Bolivia", 17000, "Pais sudamericano", "google.com", 23, "Activo"),
-            new Destino(8, "Colombia", 15000, "Pais sudamericano", "google.com", 14, "Activo"),
+            new Destino(8, "Colombia", 16000, "Pais sudamericano", "google.com", 14, "Activo"),
             new Destino(9, "China", 30000, "Pais asiatico", "google.com", 77, "Activo"),
             new Destino(10, "Israel", 45000, "Pais asiatico", "google.com", 9, "Activo"),
         ]
         this.reservasPendientes = [
-            new Reserva(this.usuarios[5], 2, "millas", this.destinos[1]),
-            new Reserva(this.usuarios[8], 1, "saldo", this.destinos[0]),
+            new Reserva(0, this.usuarios[5], 10, "millas", this.destinos[1]),
+            new Reserva(1, this.usuarios[8], 1, "saldo", this.destinos[0]),
+            new Reserva(2, this.usuarios[7], 7, "millas", this.destinos[2]),
+            new Reserva(3, this.usuarios[6], 5, "saldo", this.destinos[7]),
+            new Reserva(4, this.usuarios[9], 8, "millas", this.destinos[8]),
         ];
-        this.reservas = [];
+        this.reservasAprobadas = [];
+        this.reservasCanceladas = [];
     }
 
     aumentarCupos(id, cupos) {
@@ -103,54 +108,72 @@ class Sistema {
         }
     }
 
-    totalGananciaReservas() {
-        let totalAcumulado = 0;
-
-        for (let i = 0; i < this.reservas.length; i++) {
-            const reserva = this.reservas[i];
-            totalAcumulado += reserva.destino.precio * reserva.cantPersonas;
+    calcularCuposVendidos(destinoId) {
+        let cuposVendidos = 0;
+        for (let i = 0; i < this.reservasAprobadas.length; i++) {
+            const reserva = this.reservasAprobadas[i];
+            if (reserva.destino.id === destinoId){
+                cuposVendidos += reserva.cantPersonas;
+            }
         }
-        return totalAcumulado;
+        return cuposVendidos;
     }
 
-    procesarReserva() {
-        for (let i = 0; i < this.reservas.length; i++) {
-            const reserva = this.reservas[i];
-            let cliente = reserva.cliente;
-            let destino = reserva.destino;
+    calcularGananciaTotal(destinoId) {
+        let gananciaTotal = 0;
+        for (let i = 0; i < this.reservasAprobadas.length; i++) {
+            const reserva = this.reservasAprobadas[i];
+            if (reserva.destino.id === destinoId){
+                gananciaTotal += reserva.destino.precio * reserva.cantPersonas;
+        }
+    }
+    return gananciaTotal;
+}
 
-            if (reserva.estado === "pendiente") {
-                let costoTotal = destino.precio * reserva.cantPersonas;
+    calcularGanaciaNeta(destinoId) {
+        let gananciaNeta = 0;
+        for (let i = 0; i < this.reservasAprobadas.length; i++) {
+            const reserva = this.reservasAprobadas[i];
+            if (reserva.destino.id === destinoId && reserva.metodoPago === "saldo"){
+                gananciaNeta += reserva.destino.precio * reserva.cantPersonas;
+            }
+        }
+        return gananciaNeta;
+    }
 
-                //Pago solo con millas
-                if (reserva.metodoPago === "millas") {
-                    if (cliente.millas >= costoTotal) {
-                        cliente.millas -= costoTotal;
-                        reserva.estado = "aprobada";
-                        destino.cupos -= reserva.cantPersonas;
+    totalGananciaReservas() {
+        let totalGanancia = 0;
+        for (let i = 0; i < this.reservasAprobadas.length; i++) {
+            const reserva = this.reservasAprobadas[i];
+            totalGanancia += reserva.destino.precio * reserva.cantPersonas;
+        }
+        return totalGanancia;
+    }
 
-                        if (destino.cupos <= 0) {
-                            destino.estado = "pausado";
-                        }
-                        // Pago con saldo y millas
-                    } else {
-                        let saldoRestante = costoTotal - cliente.millas;
-                        cliente.millas = 0;
+    
 
-                        if (cliente.saldo >= saldoRestante) {
-                            cliente.saldo -= saldoRestante;
-                            reserva.estado = "aprobada";
-                            destino.cupos -= reserva.cantPersonas;
+    procesarReserva(reserva) {
+        let cliente = reserva.cliente;
+        let destino = reserva.destino;
 
-                            if (destino.cupos <= 0) {
-                                destino.estado = "pausado";
-                            }
-                        } else {
-                            reserva.estado = "cancelada";
-                        }
+        if (reserva.estado === "pendiente") {
+            let costoTotal = destino.precio * reserva.cantPersonas;
+
+            // Pago solo con millas
+            if (reserva.metodoPago === "millas") {
+                if (cliente.millas >= costoTotal) {
+                    cliente.millas -= costoTotal;
+                    reserva.estado = "aprobada";
+                    destino.cupos -= reserva.cantPersonas;
+
+                    if (destino.cupos <= 0) {
+                        destino.estado = "Pausado";
                     }
-                    // Pago solo con saldo
-                } else if (reserva.metodoPago === "saldo") {
+
+                } else {
+                    //Pago con millas y saldo
+                    let saldoRestante = costoTotal - cliente.millas;
+                    cliente.millas = 0;
 
                     if (cliente.saldo >= saldoRestante) {
                         cliente.saldo -= saldoRestante;
@@ -158,11 +181,24 @@ class Sistema {
                         destino.cupos -= reserva.cantPersonas;
 
                         if (destino.cupos <= 0) {
-                            destino.estado = "pausado";
+                            destino.estado = "Pausado";
                         }
                     } else {
                         reserva.estado = "cancelada";
                     }
+                }
+                //Pago solo con saldo
+            } else if (reserva.metodoPago === "saldo") {
+                if (cliente.saldo >= costoTotal) {
+                    cliente.saldo -= costoTotal;
+                    reserva.estado = "aprobada";
+                    destino.cupos -= reserva.cantPersonas;
+
+                    if (destino.cupos <= 0) {
+                        destino.estado = "Pausado";
+                    }
+                } else {
+                    reserva.estado = "cancelada";
                 }
             }
         }
@@ -183,7 +219,6 @@ let sistema = new Sistema();
 
 ocultarSecciones();
 mostrarBotones("invitado");
-cambiarSeccion("seccionListar")
 
 
 let botones = document.querySelectorAll(".boton");
@@ -341,7 +376,7 @@ function login() {
 //Funcionalidades ADMIN
 
 document.querySelector("#btnAgregarDestino").addEventListener("click", agregarDestinos);
-
+//Función Agregar Destinos
 function agregarDestinos() {
     let nombre = document.querySelector("#txtDestino").value;
     let precio = Number(document.querySelector("#txtPrecio").value);
@@ -384,6 +419,7 @@ function agregarDestinos() {
     }
 }
 
+//Limpiar campos cada vez que se pushea un destino
 function limpiarCampos() {
     document.querySelector("#txtDestino").value = "";
     document.querySelector("#txtPrecio").value = "";
@@ -392,40 +428,110 @@ function limpiarCampos() {
     document.querySelector("#txtCupos").value = "";
 }
 
+//Función Listar Reservas
 function listarReservas() {
-    document.querySelector("#tblListar").innerHTML = "";
-
+    document.querySelector("#tblListarPendientes").innerHTML = "";
+    //Tabla reservas pendientes
     for (let i = 0; i < sistema.reservasPendientes.length; i++) {
         const reservaPendiente = sistema.reservasPendientes[i];
-        document.querySelector("#tblListar").innerHTML += `
+        document.querySelector("#tblListarPendientes").innerHTML += `
         <tr>
         <td>${reservaPendiente.cliente.nombreUsuario}</td>
         <td>${reservaPendiente.metodoPago}</td>
         <td>${reservaPendiente.cantPersonas}</td>
         <td>${reservaPendiente.destino.nombre}</td>
-        <td>${reservaPendiente.destino.precio}</td>
+        <td>$ ${reservaPendiente.destino.precio}</td>
         <td>${reservaPendiente.destino.cupos}</td>
-        <td>${reservaPendiente.estado}</td>
+        <td>${(reservaPendiente.estado).toUpperCase()}</td>
+        <td><input type="button" value="Procesar Reserva" class="btnReserva hover" data-reserva="${reservaPendiente.id}"/></td>
         </tr>
         `;
     }
+
+    document.querySelector("#tblListarAprobadas").innerHTML = "";
+    //Tabla reservas aprobadas
+    for (let i = 0; i < sistema.reservasAprobadas.length; i++) {
+        const reservaAprobada = sistema.reservasAprobadas[i];
+        document.querySelector("#tblListarAprobadas").innerHTML += `
+        <tr>
+        <td>${reservaAprobada.cliente.nombreUsuario}</td>
+        <td>${reservaAprobada.metodoPago}</td>
+        <td>${reservaAprobada.cantPersonas}</td>
+        <td>${reservaAprobada.destino.nombre}</td>
+        <td>$ ${reservaAprobada.destino.precio}</td>
+        <td>${reservaAprobada.destino.cupos}</td>
+        <td style="color: green;">${(reservaAprobada.estado).toUpperCase()}</td>
+        </tr>
+        `;
+    }
+
+    document.querySelector("#tblListarCanceladas").innerHTML = "";
+    //Tabla reservas canceladas
+    for (let i = 0; i < sistema.reservasCanceladas.length; i++) {
+        const reservaCancelada = sistema.reservasCanceladas[i];
+        document.querySelector("#tblListarCanceladas").innerHTML += `
+        <tr>
+        <td>${reservaCancelada.cliente.nombreUsuario}</td>
+        <td>${reservaCancelada.metodoPago}</td>
+        <td>${reservaCancelada.cantPersonas}</td>
+        <td>${reservaCancelada.destino.nombre}</td>
+        <td>$ ${reservaCancelada.destino.precio}</td>
+        <td>${reservaCancelada.destino.cupos}</td>
+        <td style="color: red;">${(reservaCancelada.estado).toUpperCase()}</td>
+        </tr>
+        `;
+    }
+    //Asignación de eventos de click a los botones de reserva
+    let botonesReserva = document.querySelectorAll(".btnReserva");
+    for (let i = 0; i < botonesReserva.length; i++) {
+        botonesReserva[i].addEventListener("click", function () {
+            const reservaId = botonesReserva[i].getAttribute("data-reserva");
+            validaReservas(reservaId);
+        })
+
+    }
 }
 
+//Validación para procesar reservas
+function validaReservas(reservaId) {
+
+    let reserva = null;
+    let indexReserva = -1;
+
+    for (let i = 0; i < sistema.reservasPendientes.length; i++) {
+        const reservaPendiente = sistema.reservasPendientes[i];
+        if (reservaPendiente.id === Number(reservaId)) {
+            reserva = reservaPendiente;
+            indexReserva = i;
+            break;
+        }
+    }
+
+    if (reserva) {
+        sistema.procesarReserva(reserva);
+
+        if (reserva.estado === "aprobada") {
+            sistema.reservasAprobadas.push(reserva);
+        } else if (reserva.estado === "cancelada") {
+            sistema.reservasCanceladas.push(reserva);
+        }
+
+        if (indexReserva !== -1) {
+            sistema.reservasPendientes.splice(indexReserva, 1);
+        }
+    }
+    listarReservas();
+}
+
+
+//Función Gestionar Destinos
 function gestionarDestinos() {
 
     document.querySelector("#tblDestinos").innerHTML = "";
 
     for (let i = 0; i < sistema.destinos.length; i++) {
         const destino = sistema.destinos[i];
-        let color = ""
-        switch (destino.estado) {
-            case "Activo":
-                color = "green";
-                break;
-            case "Pausado":
-                color = "gray";
-                break;
-        }
+
         document.querySelector("#tblDestinos").innerHTML += `<tr>
                       <td> ${destino.nombre}</td>
                       <td class="precioDescuento" data-idprecio="${destino.id}">$ ${destino.precio}</td>
@@ -433,11 +539,14 @@ function gestionarDestinos() {
                       <td><img src="${destino.url}" alt="prueba"></td>
                       <td class="cupos"><span>${destino.cupos}</span><input type="number" value="" class="inpCupos" data-id="${destino.id}"></td>
                       <td><input type="checkbox" name="" id="" class="checkbox" data-id="${destino.id}"></td>
-                      <td style="color: ${color};" class="estadoDestino">${destino.estado}</td>
-                      <td><input type="button" value="Activar" class="btnActivar" /></td><br>
-                      <td><input type="button" value="Pausar" class="btnPausar" /></td>
+                      <td style="color: ${destino.estado === "Activo" ? "green" : "grey"};" data-estadoid="${destino.id}" class="estadoDestino">
+                      ${destino.estado}
+                      </td>
+                      <td><input type="button" value="Activar" class="btnActivar" data-id="${destino.id}" data-estado="Activo"/></td><br>
+                      <td><input type="button" value="Pausar" class="btnPausar" data-id="${destino.id}" data-estado="Pausado"/></td>
                     </tr>`;
     }
+    iniciarBotonesEstado();
 
     //Agregar evento de focus a cada input de cupos
     let inputs = document.querySelectorAll(".inpCupos");
@@ -458,6 +567,18 @@ function gestionarDestinos() {
             aplicarDescuento(sistema.destinos[i].precio, id, this.checked);
         })
     }
+
+    //Asignarle evento de click a botones "Activar" y "Pausar"
+    let botonesEstado = document.querySelectorAll(".btnActivar, .btnPausar");
+
+    for (let i = 0; i < botonesEstado.length; i++) {
+        botonesEstado[i].addEventListener("click", function () {
+            let idDestino = botonesEstado[i].getAttribute("data-id");
+            let nuevoEstado = botonesEstado[i].getAttribute("data-estado");
+
+            cambiarEstado(idDestino, nuevoEstado);
+        })
+    }
 }
 //Aplicar descuento con checkbox
 function aplicarDescuento(precioDestino, idDestino, checkeado) {
@@ -466,22 +587,16 @@ function aplicarDescuento(precioDestino, idDestino, checkeado) {
     let destinoNombre = precio.nombre;
     let precioCelda = document.querySelector(`.precioDescuento[data-idprecio="${idDestino}"]`);
     let precioOriginal = Number(precioDestino);
-    console.log(precioOriginal);
-    
 
     if (checkeado) {
         sistema.descuentoFijo(precioOriginal, destino);
-        document.querySelector("#pErrorGestionar").innerHTML = `destino ${destinoNombre} ahora está en oferta.`;
-        precioCelda.innerHTML = `${sistema.descuentoFijo(precioOriginal, destino)}`; console.log(sistema.descuentoFijo(precioOriginal, destino));
+        document.querySelector("#pErrorGestionar").innerHTML = `El destino: ${destinoNombre} ahora está en oferta.`;
+        precioCelda.innerHTML = `$ ${sistema.descuentoFijo(precioOriginal, destino).toFixed(0)}`;
     } else {
         sistema.deshacerDescuento(precioOriginal, destino);
-        document.querySelector("#pErrorGestionar").innerHTML = `destino ${destinoNombre} ya no está en oferta.`;
-        precioCelda.innerHTML = `${sistema.deshacerDescuento(precioOriginal, destino)}`;
+        document.querySelector("#pErrorGestionar").innerHTML = `El destino: ${destinoNombre} ya no está en oferta.`;
+        precioCelda.innerHTML = `$ ${sistema.deshacerDescuento(precioOriginal, destino).toFixed(0)}`;
     }
-
-
-
-
 }
 
 //Agregar botón a la celda seleccionada
@@ -494,7 +609,7 @@ function agregarBoton(cuposCelda, idDestino) {
     })
 }
 
-
+//Función Agregar Cupos
 function agregarCupos(idDestino) {
     let cupos = Number(document.querySelector(`.inpCupos[data-id="${idDestino}"]`).value);
     let destino = obtenerElemento(sistema.destinos, "id", idDestino);
@@ -520,50 +635,90 @@ function agregarCupos(idDestino) {
     }
 }
 
-
-//Asignarle evento de click a botones "Activar" y "Pausar"
-let botonesEstado = document.querySelectorAll(".btnActivar, .btnPausar");
-for (let i = 0; i < botonesEstado.length; i++) {
-    botonesEstado[i].addEventListener("click", function () {
-        cambiarEstado(botonesEstado[i].getAttribute("value"));
-    })
-}
-
 //Cambiar estado de destinos
-function cambiarEstado(estadoDestino) {
-    let destino = obtenerElemento(sistema.destinos, "estado", estadoDestino);
+function cambiarEstado(idDestino, nuevoEstado) {
+    let destino = obtenerElemento(sistema.destinos, "id", Number(idDestino));
 
-    switch (destino) {
-        case "Activo":
-            document.querySelector(".estadoDestino").innerHTML = "Pausado";
-            break;
-        case "Pausado":
-            document.querySelector(".estadoDestino").innerHTML = "Activo";
-            break;
+    if (destino) {
+        destino.estado = nuevoEstado;
+
+        let estadoDestino = document.querySelector(`.estadoDestino[data-estadoid="${idDestino}"]`);
+
+        estadoDestino.innerHTML = nuevoEstado;
+        estadoDestino.style.color = nuevoEstado === "Activo" ? "green" : "gray";
+    }
+
+    let btnActivar = document.querySelector(`.btnActivar[data-id="${idDestino}"]`);
+    let btnPausar = document.querySelector(`.btnPausar[data-id="${idDestino}"]`);
+
+    if (nuevoEstado === "Activo" && destino.cupos === 0){
+        document.querySelector("#pErrorGestionar").innerHTML = "Error, debe introducir cupos antes de activar este destino.";
+        return;
+    }
+
+
+    if (btnActivar && btnPausar) {
+        if (nuevoEstado === "Activo") {
+            btnActivar.disabled = true;
+            btnPausar.disabled = false;
+            document.querySelector("#pErrorGestionar").innerHTML = `Se activó el destino: ${destino.nombre} satisfactoriamente.`;
+        } else if (nuevoEstado === "Pausado") {
+            btnActivar.disabled = false;
+            btnPausar.disabled = true;
+            document.querySelector("#pErrorGestionar").innerHTML = `Se pausó el destino: ${destino.nombre} satisfactoriamente.`;
+        }
     }
 }
 
+
+//Funcion para inicializar el estado de los botones al cargar la sección
+function iniciarBotonesEstado() {
+    for (let i = 0; i < sistema.destinos.length; i++) {
+        const destino = sistema.destinos[i];
+        let btnActivar = document.querySelector(`.btnActivar[data-id="${destino.id}"]`);
+        let btnPausar = document.querySelector(`.btnPausar[data-id="${destino.id}"]`);
+
+        if (btnActivar && btnPausar) {
+            if (destino.estado === "Activo") {
+                btnActivar.disabled = true;
+                btnPausar.disabled = false;
+            } else if (destino.estado === "Pausado") {
+                btnActivar.disabled = false;
+                btnPausar.disabled = true;
+            }
+        }
+    }
+}
+
+
+//Funcion de listar el informe de ganancias
 function informeGanancias() {
     document.querySelector("#totalVentas").innerHTML = `$ ${sistema.totalGananciaReservas()}`;
     document.querySelector("#tblInforme").innerHTML = "";
 
     for (let i = 0; i < sistema.destinos.length; i++) {
         const destino = sistema.destinos[i];
+        let totalCuposVendidos = sistema.calcularCuposVendidos(destino.id);
+        let gananciaTotal = sistema.calcularGananciaTotal(destino.id);
+        let gananciaNeta = sistema.calcularGanaciaNeta(destino.id);
+    
         document.querySelector("#tblInforme").innerHTML += `
                     <tr>
                       <td> ${destino.nombre}</td>
-                      <td>${destino.cupos}</td>  
+                      <td>${totalCuposVendidos}</td>  
+                      <td>${gananciaTotal}</td>  
+                      <td>${gananciaNeta}</td>  
+                      <td style="color: green;">${sistema.reservasAprobadas.estado}</td>  
                     </tr>
     `;
     }
-
 }
 
 //Funcionalidades CLIENTE
-
+//Función Explorar Destinos
 function explorarDestinos() {
+    document.querySelector("#tblExplorar").innerHTML = "";
 
-    document.querySelector("#tblDestinos").innerHTML = "";
     for (let i = 0; i < sistema.destinos.length; i++) {
         const destino = sistema.destinos[i];
 
@@ -579,7 +734,7 @@ function explorarDestinos() {
         }
     }
 
-
+    //Asignar evento de click a botones de reservar
     let botonesReservar = document.querySelectorAll(".btnReservar");
     for (let i = 0; i < botonesReservar.length; i++) {
         const boton = botonesReservar[i];
@@ -587,11 +742,9 @@ function explorarDestinos() {
             const destinoId = boton.getAttribute("data-id");
             clickReserva(destinoId);
         });
-
-
     }
 }
-
+//Funcion de hacer click en reservar destino
 function clickReserva(destinoId) {
     let destinoSeleccionado = null
     for (let i = 0; i < sistema.destinos.length; i++) {
