@@ -1,7 +1,3 @@
-//RESOLVER FUNCION DE ACTIVAR Y DESACTIVAR DESTINOS
-//RESOLVER CHECKBOX DE DESCUENTO
-//AJUSTAR FOR LOOP EN EXPLORAR DESTINOS()
-
 class Reserva {
     constructor(id, cliente, cantPersonas, metodoPago, destino, estado = "pendiente") {
         this.id = id;
@@ -64,24 +60,23 @@ class Sistema {
             new Admin(2, "administrador3", "Admin3"),
             new Admin(3, "administrador4", "Admin4",),
             new Admin(4, "administrador5", "Admin5",),
-            new Cliente(5, "cliente1", "Cliente1", 15000, "1111-2222-3333-4444", 455, 0),
-            new Cliente(6, "cliente2", "Cliente2", 15000, "1234-4321-433-422", 323, 0),
-            new Cliente(7, "cliente3", "Cliente3", 15000, "4231-532-8638-9740", 444, 0),
-            new Cliente(8, "cliente4", "Cliente4", 15000, "0023-2315-5734-5734", 999, 0),
-            new Cliente(9, "cliente5", "Cliente5", 15000, "8493-4763-5483-8473", 747, 0),
+            new Cliente(5, "juantriunfo05", "Juan123", 15000, "5462-9964-5792-8533", 455, 0),
+            new Cliente(6, "julianschenck10", "Julian123", 15000, "9563-2368-0757-2352", 323, 0),
+            new Cliente(7, "lionelmessi10", "Messi123", 15000, "4783-9683-1367-3624", 774, 0),
+            new Cliente(8, "cristianoronaldo07", "Ronaldo123", 15000, "6347-0579-4734-8024", 924, 0),
+            new Cliente(9, "neymarjunior11", "Neymar123", 15000, "7563-4763-5483-7732", 229, 0),
         ]
         this.destinos = [
-            new Destino(0, "Estados Unidos", 2500, "Pais americano", "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/1920px-Flag_of_the_United_States.svg.png", 20, "Activo"),
+            new Destino(0, "Estados Unidos", 10000, "Pais americano", "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/1920px-Flag_of_the_United_States.svg.png", 20, "Activo"),
             new Destino(1, "Uruguay", 1500, "Pais sudamericano", "https://es.wikipedia.org/wiki/Archivo:Uruguay_River_near_El_Sobrario,_Misiones,_Argentina,_12th._Jan._2011_-_Flickr_-_PhillipC.jpg", 10, "Activo"),
-            new Destino(2, "Alemania", 1000, "Pais europeo", "google.com", 100, "Pausado"),
-            new Destino(3, "Argentina", 5000, "Pais sudamericano", "google.com", 50, "Pausado"),
-            new Destino(4, "Brasil", 1200, "Pais sudamericano", "google.com", 2, "Activo"),
+            new Destino(2, "Alemania", 16000, "Pais europeo", "google.com", 100, "Pausado"),
+            new Destino(3, "Argentina", 500, "Pais sudamericano", "google.com", 50, "Pausado"),
+            new Destino(4, "Brasil", 6200, "Pais sudamericano", "google.com", 2, "Activo"),
             new Destino(5, "Chile", 9000, "Pais sudamericano", "google.com", 47, "Pausado"),
-            new Destino(6, "Venezuela", 7000, "Pais sudamericano", "google.com", 99, "Activo"),
-            new Destino(7, "Bolivia", 17000, "Pais sudamericano", "google.com", 23, "Activo"),
-            new Destino(8, "Colombia", 16000, "Pais sudamericano", "google.com", 14, "Activo"),
+            new Destino(6, "Venezuela", 4000, "Pais sudamericano", "google.com", 99, "Activo"),
+            new Destino(7, "Bolivia", 25000, "Pais sudamericano", "google.com", 23, "Activo"),
+            new Destino(8, "Colombia", 1000, "Pais sudamericano", "google.com", 14, "Activo"),
             new Destino(9, "China", 30000, "Pais asiatico", "google.com", 77, "Activo"),
-            new Destino(10, "Israel", 45000, "Pais asiatico", "google.com", 9, "Activo"),
         ]
         this.reservasPendientes = [
             new Reserva(0, this.usuarios[5], 10, "millas", this.destinos[1]),
@@ -112,7 +107,7 @@ class Sistema {
         let cuposVendidos = 0;
         for (let i = 0; i < this.reservasAprobadas.length; i++) {
             const reserva = this.reservasAprobadas[i];
-            if (reserva.destino.id === destinoId){
+            if (reserva.destino.id === destinoId) {
                 cuposVendidos += reserva.cantPersonas;
             }
         }
@@ -123,18 +118,18 @@ class Sistema {
         let gananciaTotal = 0;
         for (let i = 0; i < this.reservasAprobadas.length; i++) {
             const reserva = this.reservasAprobadas[i];
-            if (reserva.destino.id === destinoId){
+            if (reserva.destino.id === destinoId) {
                 gananciaTotal += reserva.destino.precio * reserva.cantPersonas;
+            }
         }
+        return gananciaTotal;
     }
-    return gananciaTotal;
-}
 
     calcularGanaciaNeta(destinoId) {
         let gananciaNeta = 0;
         for (let i = 0; i < this.reservasAprobadas.length; i++) {
             const reserva = this.reservasAprobadas[i];
-            if (reserva.destino.id === destinoId && reserva.metodoPago === "saldo"){
+            if (reserva.destino.id === destinoId && reserva.metodoPago === "saldo") {
                 gananciaNeta += reserva.destino.precio * reserva.cantPersonas;
             }
         }
@@ -150,7 +145,7 @@ class Sistema {
         return totalGanancia;
     }
 
-    
+
 
     procesarReserva(reserva) {
         let cliente = reserva.cliente;
@@ -219,6 +214,7 @@ let sistema = new Sistema();
 
 ocultarSecciones();
 mostrarBotones("invitado");
+cambiarSeccion("seccionInicio");
 
 
 let botones = document.querySelectorAll(".boton");
@@ -361,7 +357,8 @@ function login() {
 
             switch (sistema.usuarioLogeado.tipoUsuario) {
                 case "admin":
-                    document.querySelector("#pBienvenida").innerHTML = `Bienvenido de nuevo administrador. Para agregar destinos nuevos, puede acceder a la pestaña de "Agregar Destinos".<br>No olvide procesar las reservas pendientes en "Listar Reservas".`;
+                    document.querySelector("#h4Bienvenida").innerHTML = `Hola de nuevo administrador.`;
+                    document.querySelector("#ulBienvenida").innerHTML = `<li>Para agregar destinos nuevos, puede acceder a la pestaña de "Agregar Destinos".</li><li>No olvide procesar las reservas pendientes en "Listar Reservas".</li><li>Puedes activar o desactivar destinos en el apartado "Gestionar Destinos."`;
                     break;
                 case "cliente":
                     document.querySelector("#pBienvenida").innerHTML = `¡Bienvenido de nuevo! Puedes realizar tus reservas y mirar ofertas actuales en la pestaña "Explorar Destinos".<br>Saldo disponible: $ ${sistema.usuarioLogeado.saldo}.<br>Millas disponibles: ${sistema.usuarioLogeado.millas}.`;
@@ -494,6 +491,7 @@ function listarReservas() {
 
 //Validación para procesar reservas
 function validaReservas(reservaId) {
+    document.querySelector("#reservaCliente").innerHTML = "";
 
     let reserva = null;
     let indexReserva = -1;
@@ -512,8 +510,15 @@ function validaReservas(reservaId) {
 
         if (reserva.estado === "aprobada") {
             sistema.reservasAprobadas.push(reserva);
+            document.querySelector("#reservaCliente").innerHTML = `<h5>Reserva Aprobada</h5>
+            <ul><li>Cliente: ${reserva.cliente.nombreUsuario}</li><li>Saldo restante: $ ${reserva.cliente.saldo}</li><li> Millas restantes: ${reserva.cliente.millas}</li></ul>`;
+            document.querySelector("#reservaCliente").style.backgroundColor = "rgb(199, 253, 199)";
+            document.querySelector("#reservaCliente").style.border = "2px solid #b2e4e3";
         } else if (reserva.estado === "cancelada") {
             sistema.reservasCanceladas.push(reserva);
+            document.querySelector("#reservaCliente").innerHTML = `<h5 style="color: red;">Reserva Cancelada</h5>`;
+            document.querySelector("#reservaCliente").style.backgroundColor = "#fafafa";
+            document.querySelector("#reservaCliente").style.border = "none";
         }
 
         if (indexReserva !== -1) {
@@ -651,7 +656,7 @@ function cambiarEstado(idDestino, nuevoEstado) {
     let btnActivar = document.querySelector(`.btnActivar[data-id="${idDestino}"]`);
     let btnPausar = document.querySelector(`.btnPausar[data-id="${idDestino}"]`);
 
-    if (nuevoEstado === "Activo" && destino.cupos === 0){
+    if (nuevoEstado === "Activo" && destino.cupos === 0) {
         document.querySelector("#pErrorGestionar").innerHTML = "Error, debe introducir cupos antes de activar este destino.";
         return;
     }
@@ -696,21 +701,25 @@ function informeGanancias() {
     document.querySelector("#totalVentas").innerHTML = `$ ${sistema.totalGananciaReservas()}`;
     document.querySelector("#tblInforme").innerHTML = "";
 
-    for (let i = 0; i < sistema.destinos.length; i++) {
-        const destino = sistema.destinos[i];
+    for (let i = 0; i < sistema.reservasAprobadas.length; i++) {
+        const reserva = sistema.reservasAprobadas[i];
+        const destino = reserva.destino;
+
         let totalCuposVendidos = sistema.calcularCuposVendidos(destino.id);
         let gananciaTotal = sistema.calcularGananciaTotal(destino.id);
         let gananciaNeta = sistema.calcularGanaciaNeta(destino.id);
-    
-        document.querySelector("#tblInforme").innerHTML += `
+
+        if (totalCuposVendidos !== 0) {
+            document.querySelector("#tblInforme").innerHTML += `
                     <tr>
-                      <td> ${destino.nombre}</td>
+                      <td>${destino.nombre}</td>
                       <td>${totalCuposVendidos}</td>  
-                      <td>${gananciaTotal}</td>  
-                      <td>${gananciaNeta}</td>  
-                      <td style="color: green;">${sistema.reservasAprobadas.estado}</td>  
+                      <td>$ ${gananciaTotal}</td>  
+                      <td>$ ${gananciaNeta}</td>  
+                      <td style="color: green;">${reserva.estado}</td>  
                     </tr>
     `;
+        }
     }
 }
 

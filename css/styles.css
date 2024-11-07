@@ -1,9 +1,9 @@
 @charset "utf-8";
 /* CSS Document */
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz@8..144&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
 body {
-  font-family: "Roboto Flex", sans-serif;
+  font-family: "Golos Text", sans-serif;
   background-color: #fafafa;
   margin: 0;
 }
@@ -25,13 +25,13 @@ main {
   transition: 0.5s;
 }
 
-.hover:hover{
+.hover:hover {
   color: white;
   background-color: #026fb7;
 }
 
 /* Titulos */
-h1{
+h1 {
   font-size: 35px;
 }
 
@@ -40,7 +40,7 @@ h2,
 h3,
 h5,
 h6 {
-  font-family: "Roboto Flex", sans-serif;
+  font-family: "Golos Text", sans-serif;
   color: #002e4a;
 }
 
@@ -55,21 +55,20 @@ h2 {
 }
 
 h4 {
-  margin-top: 26px;
   font-weight: 600;
-  color: #c0ca33;
+  color: #026fb7;
 }
 
 
 
-#tblDestinos  .cupos {
+#tblDestinos .cupos {
   height: 100%;
   width: 10px;
   margin: 0 auto;
   text-align: center;
 }
 
-#tblDestinos .cupos input[type="text"]{
+#tblDestinos .cupos input[type="text"] {
   height: 20%;
   justify-content: center;
   text-align: center;
@@ -90,23 +89,26 @@ h4 {
 #navPrincipal {
   float: right;
   margin-top: 5px;
-  margin-right: 10px;
+  margin-right: 70px;
   max-width: 700px;
 }
 
 #navPrincipal li {
   list-style-type: none;
-  padding: 10px;
+  padding: 5px;
+  padding-right: 8px;
   margin-left: 5px;
-  margin-top: 25px;
+  margin-top: 40px;
   margin-right: 10px;
   float: left;
 }
 
 #navPrincipal li a {
-  font-size: 16px;
-  align-items: center;
+  font-size: 15px;
+  align-items: end;
+  font-weight: bold;
 }
+
 .boton {
   cursor: pointer;
 }
@@ -114,41 +116,78 @@ h4 {
 
 header img {
   margin: 20px;
-  width: 60px;
-  border:1px solid #888;
+  margin-left: 100px;
+  width: 70px;
+  height: auto;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: scale(2.0);
 }
 
 #navPrincipal a {
   cursor: pointer;
-  color: #fafafa;
+  color: #002e4a;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 800;
 }
 
 #navPrincipal a:hover {
-  color: #c0ca33;
+  color: #026fb7;
+  transition: 0.5s;
 }
 
-#seccionRegistro, #seccionLogin,
-#seccionAgregar, #seccionGestionar,
-#seccionExplorar, #seccionBienvenida,
-#seccionReservar, #seccionGanancias,
-#seccionListar {
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+#seccionRegistro,
+#seccionLogin,
+#seccionAgregar,
+#seccionGestionar,
+#seccionExplorar,
+#seccionBienvenida,
+#seccionReservar,
+#seccionGanancias,
+#seccionListar,
+#seccionInicio {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
 }
 
+#seccionBienvenida {
+  line-height: 1.5;
+}
 
+#seccionBienvenida h1 {
+  font-size: 40px;
+}
+
+#seccionBienvenida h4 {
+  margin-top: -30px;
+  font-size: 20px;
+}
+
+#seccionBienvenida li {
+  font-size: 20px;
+}
+
+#seccionInicio li {
+  text-align: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #b2e4e3;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
 header {
-  background-color: #002e4a;
+  background-color: #b2e4e3;
   clear: both;
   color: fafafa;
   display: flex;
   justify-content: space-between;
+  height: 145px;
 }
 
 /* Estilos tabla */
@@ -178,27 +217,28 @@ table img {
   max-width: 100px;
 }
 
-td > input[type="button"].btnAgregarCupos:hover {
+td>input[type="button"].btnAgregarCupos:hover {
   background-color: #026fb7;
   color: white;
 }
 
-td > input[type="button"].btnActivar, td >  input[type="button"].btnPausar {
+td>input[type="button"].btnActivar,
+td>input[type="button"].btnPausar {
   width: 80px;
   font-size: 10px;
 }
 
-td > input[type="button"].btnActivar {
+td>input[type="button"].btnActivar {
   color: green;
   border: 2px solid green;
 }
 
-td > input[type="button"].btnActivar:hover {
+td>input[type="button"].btnActivar:hover {
   color: white;
   background-color: green;
 }
 
-td > input[type="button"].btnActivar:hover:disabled {
+td>input[type="button"].btnActivar:hover:disabled {
   color: inherit;
   background-color: inherit;
 }
@@ -213,13 +253,13 @@ input[type="button"].btnPausar:hover {
   background-color: rgb(43, 40, 40);
 }
 
-td > input[type="button"].btnPausar:hover:disabled {
+td>input[type="button"].btnPausar:hover:disabled {
   color: inherit;
   background-color: inherit;
 }
 
 
-td > input[type="button"] {
+td>input[type="button"] {
   max-width: 120px;
   font-size: 8px;
   height: 30px;
@@ -228,9 +268,58 @@ td > input[type="button"] {
 }
 
 
-td > input[type="text"] {
+td>input[type="text"] {
   max-width: 25px;
   font-size: 15px;
+}
+
+#reservaCliente {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgb(199, 253, 199);
+  border-radius: 10px;
+  border: 2px solid #b2e4e3;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+#reservaCliente:empty {
+  display: none;
+}
+
+#reservaCliente h5 {
+  margin-top: -5px;
+}
+
+#reservaCliente ul {
+  margin: 0;
+  margin-top: -15px;
+}
+
+#reservaCliente li {
+  list-style-type: none;
+  text-align: start;
+  align-items: start;
+  margin-left: -35px;
+}
+
+#tblListarCanceladas {
+  margin-bottom: 200px;
+}
+
+#seccionGanancias h4{
+  font-size: 35px;
+  margin-top: -10px;
+  color: green;
+}
+
+#seccionGanancias td {
+  font-size: 20px;
+  padding-bottom: 8px;
+  padding: 10px;
 }
 
 input.inpCupos {
@@ -238,13 +327,15 @@ input.inpCupos {
   margin: 0 auto;
 }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-input[type=number] { -moz-appearance:textfield; }
+input[type=number] {
+  -moz-appearance: textfield;
+}
 
 table tr:nth-child(odd) td {
   background-color: #ececec;
@@ -301,16 +392,22 @@ main {
 
 /* Estilos del footer */
 footer {
-  background-color: #002e4a;
+  background-color: #b2e4e3;
   clear: both;
   padding: 20px;
   color: #f5f5f7;
   font-size: 12px;
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  margin-top: 200px;
 }
 
 footer a {
   cursor: pointer;
-  color: #f5f5f7;
+  color: #002e4a;
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
@@ -318,13 +415,13 @@ footer a {
 
 
 input[type="button"]:disabled {
-    cursor: not-allowed; 
-    opacity: 0.5; 
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 input[type="button"]:disabled:hover {
-    background-color: transparent; 
-    color: inherit; 
-    cursor: not-allowed; 
-    opacity: 0.5; 
+  background-color: transparent;
+  color: inherit;
+  cursor: not-allowed;
+  opacity: 0.5;
 }
