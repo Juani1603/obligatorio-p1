@@ -42,7 +42,7 @@
                         <a>Gestionar Destinos</a>
                     </li>
                     <li class="boton admin" id="btnSeccionGanancias">
-                        <a>Generar Informe Ganancias</a>
+                        <a>Informe Ganancias</a>
                     </li>
                     <li class="boton cliente" id="btnSeccionExplorar">
                         <a>Explorar Destinos</a>
@@ -52,6 +52,9 @@
                     </li>
                     <li class="boton cliente" id="btnSeccionOfertas">
                         <a>Destinos en Oferta</a>
+                    </li>
+                    <li class="boton admin cliente" id="btnCerrarSesion">
+                        <a>Cerrar Sesión</a>
                     </li>
                 </ul>
             </nav>
@@ -103,13 +106,15 @@
             <section id="seccionLogin" class="seccion">
                 <h2>Bienvenido</h2>
                 <label for="txtUsuarioLogin">Ingrese su nombre de usuario</label>
-                <input type="text" id="txtUsuarioLogin" value="administrador1" required><br>
+                <input type="text" id="txtUsuarioLogin" value="juantriunfo05" required><br>
 
                 <label for="txtPasswordLogin">Ingrese su contraseña</label>
-                <input type="password" id="txtPasswordLogin" value="Admin1" required><br>
+                <input type="password" id="txtPasswordLogin" value="Juan123" required><br>
 
                 <p id="pErrorLogin"></p>
                 <input type="button" value="Ingresar" id="btnLogin" class="hover">
+
+                <p>¿No tienes una cuenta?<a class="boton invitado register" id="btnSeccionRegistro">Regístrate</a></p>
             </section>
 
             <!--Bienvenida-->
@@ -239,6 +244,7 @@
             <!--CLIENTE-->
             <!--Explorar Destinos-->
             <section id="seccionExplorar" class="seccion">
+                <p id="msjExplorar"></p>
                 <h3>Explorar Destinos</h3>
                 <table>
                     <thead>
@@ -258,13 +264,15 @@
             <section id="seccionReservar" class="seccion">
                 <h3>Reservar Destino</h3>
                 <div id="detalleDestino"></div>
+                <label for="txtPersonas">Digite la cantidad de personas:</label>
+                <input type="number" id="txtPersonas"><br>
                 <select id="slcPago">
                     <option value="">Seleccione una opción..</option>
-                    <option value="sal">Saldo</option>
-                    <option value="mil">Millas</option>
+                    <option value="saldo">Saldo</option>
+                    <option value="millas">Millas</option>
                 </select><br>
 
-                <input type="button" value="Realizar Reserva">
+                <input type="button" value="Realizar Reserva" id="btnRealizarReserva">
             </section>
 
         </main>

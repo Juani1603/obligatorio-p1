@@ -175,6 +175,9 @@ class Sistema {
                         reserva.estado = "aprobada";
                         destino.cupos -= reserva.cantPersonas;
 
+                        let millasGanadas = Math.floor(saldoRestante / 100);
+                        cliente.millas += millasGanadas;
+
                         if (destino.cupos <= 0) {
                             destino.estado = "Pausado";
                         }
@@ -185,9 +188,12 @@ class Sistema {
                 //Pago solo con saldo
             } else if (reserva.metodoPago === "saldo") {
                 if (cliente.saldo >= costoTotal) {
-                    cliente.saldo -= costoTotal;
+                    cliente.saldo -= costoTotal;    
                     reserva.estado = "aprobada";
                     destino.cupos -= reserva.cantPersonas;
+
+                    let millasGanadas = Math.floor(costoTotal / 100);
+                        cliente.millas += millasGanadas;
 
                     if (destino.cupos <= 0) {
                         destino.estado = "Pausado";
@@ -244,6 +250,9 @@ function mostrarSeccion() {
         cambiarSeccion(idSeccion);
     } else {
         //cerrar sesión
+        cambiarSeccion("seccionInicio");
+        mostrarBotones("invitado")
+        sistema.usuarioLogeado = null;
     }
 }
 
@@ -361,7 +370,8 @@ function login() {
                     document.querySelector("#ulBienvenida").innerHTML = `<li>Para agregar destinos nuevos, puede acceder a la pestaña de "Agregar Destinos".</li><li>No olvide procesar las reservas pendientes en "Listar Reservas".</li><li>Puedes activar o desactivar destinos en el apartado "Gestionar Destinos."`;
                     break;
                 case "cliente":
-                    document.querySelector("#pBienvenida").innerHTML = `¡Bienvenido de nuevo! Puedes realizar tus reservas y mirar ofertas actuales en la pestaña "Explorar Destinos".<br>Saldo disponible: $ ${sistema.usuarioLogeado.saldo}.<br>Millas disponibles: ${sistema.usuarioLogeado.millas}.`;
+                    document.querySelector("#h4Bienvenida").innerHTML = `¡Bienvenido de nuevo!`;
+                    document.querySelector("#ulBienvenida").innerHTML = `<li>Puedes realizar tus reservas y mirar ofertas actuales en la pestaña "Explorar Destinos".</li><li>Saldo disponible: $ ${sistema.usuarioLogeado.saldo}.</li><li>Millas disponibles: ${sistema.usuarioLogeado.millas}.</li>`;
             }
             return;
         } else {
@@ -767,12 +777,28 @@ function clickReserva(destinoId) {
     if (destinoSeleccionado) {
         cambiarSeccion("seccionReservar")
         document.querySelector("#detalleDestino").innerHTML = `
+        <div data-destinoid="${destinoSeleccionado.id}">
         <img src="${destinoSeleccionado.url}" width="200">
         <h2>${destinoSeleccionado.nombre}</h2><br>
         <h4>$ ${destinoSeleccionado.precio} / persona</h4><br>
+        </div>
         `;
-
     }
+}
+
+document.querySelector("#btnRealizarReserva").addEventListener("click", realizarReserva);
+
+//Función Reservar
+function realizarReserva() {
+    let cantPersonas = Number(document.querySelector("#txtPersonas").value);
+    let metodoPago = document.querySelector("#slcPago").value;
+    let destinoId = document.querySelector("#detalleDestino div").getAttribute("data-destinoid");
+    
+    if (metodoPago !== "" && cantPersonas > 0){
+        document.querySelector("#msjExplorar").innerHTML = "Reserva procesada exitosamente. Esperando confirmación de administrador.";
+        sistema.reservasPendientes.push(new Reserva(idReserva++, sistema.usuarioLogeado, cantPersonas, metodoPago, destinoId, "pendiente"));
+        cambiarSeccion("seccionExplorar");
+    }    
 }
 
 
