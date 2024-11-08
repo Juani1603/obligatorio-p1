@@ -147,7 +147,8 @@ header img {
 #seccionReservar,
 #seccionGanancias,
 #seccionListar,
-#seccionInicio {
+#seccionInicio,
+#seccionHistorial {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -271,6 +272,10 @@ td>input[type="button"] {
 td>input[type="text"] {
   max-width: 25px;
   font-size: 15px;
+}
+#seccionHistorial td{
+  font-size: 20px;
+  padding: 10px;
 }
 
 #reservaCliente {
