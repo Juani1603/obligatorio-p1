@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="shortcut icon"
+        href="https://img.freepik.com/vector-premium/mejor-plantilla-vectorial-diseno-logotipo-viaje-cada-aventura_160069-208.jpg?semt=ais_hybrid"
+        type="image/x-icon">
+    <title>Obligatorio P1</title>
+</head>
+
+<body>
+
+    <div id="contenedor">
+        <header>
+            <ul>
+                <li class="boton invitado admin cliente" id="btnSeccionBienvenida">
+                    <a>
+                        <img id="logo"
+                            src="https://img.freepik.com/vector-premium/mejor-plantilla-vectorial-diseno-logotipo-viaje-cada-aventura_160069-208.jpg?semt=ais_hybrid"
+                            alt="logo" /></a>
+                </li>
+            </ul>
+
+            <nav>
+                <ul id="navPrincipal">
+                    <li class="boton invitado register" id="btnSeccionRegistro">
+                        <a>Registrarse</a>
+                    </li>
+                    <li class="boton invitado login" id="btnSeccionLogin">
+                        <a>Ingresar</a>
+                    </li>
+                    <li class="boton admin" id="btnSeccionAgregar">
+                        <a>Agregar Destinos</a>
+                    </li>
+                    <li class="boton admin" id="btnSeccionListar">
+                        <a>Listar Reservas</a>
+                    </li>
+                    <li class="boton admin" id="btnSeccionGestionar">
+                        <a>Gestionar Destinos</a>
+                    </li>
+                    <li class="boton admin" id="btnSeccionGanancias">
+                        <a>Informe Ganancias</a>
+                    </li>
+                    <li class="boton cliente" id="btnSeccionExplorar">
+                        <a>Explorar Destinos</a>
+                    </li>
+                    <li class="boton cliente" id="btnSeccionHistorial">
+                        <a>Historial Reservas</a>
+                    </li>
+                    <li class="boton cliente" id="btnSeccionOfertas">
+                        <a>Destinos en Oferta</a>
+                    </li>
+                    <li class="boton admin cliente" id="btnCerrarSesion">
+                        <a>Cerrar Sesión</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <!--Inicio-->
+            <section id="seccionInicio" class="seccion">
+                <h1>Bienvenido a la agencia de viajes Travel</h1>
+                <h4>Tu aventura comienza aquí</h4>
+                <ul id="ulInicio">
+                    <li class="boton invitado register" id="btnSeccionRegistro">
+                        <a>Registrarse</a>
+                    </li>
+                    <li class="boton invitado login" id="btnSeccionLogin">
+                        <a>Ingresar</a>
+                    </li>
+                </ul>
+            </section>
+            <!--Registrarse -->
+            <section id="seccionRegistro" class="seccion">
+                <h2>Regístrese</h2>
+                <label for="txtNombre">Ingrese su nombre:</label>
+                <input type="text" id="txtNombre" value="prueba" required><br>
+
+                <label for="txtApellido">Ingrese su apellido:</label>
+                <input type="text" id="txtApellido" value="apellido" required><br>
+
+                <label for="txtUsuario">Ingrese su nombre de usuario</label>
+                <input type="text" id="txtUsuario" value="usuarioPrueba" required><br>
+
+                <label for="txtPassword">Ingrese su contraseña</label>
+                <input type="password" id="txtPassword" value="Hola123" required><br>
+
+                <label for="txtTarjeta">Digíte su número de tarjeta de crédito:</label>
+                <input type="text" id="txtTarjeta" value="4485746493384014" required><br>
+
+                <label for="txtCvc">Digíte su cvc:</label>
+                <input type="text" id="txtCvc" value="842" required><br>
+
+                <p id="pErrorRegistro"></p>
+
+                <input type="button" value="Registrarse" id="btnRegistrarse">
+
+                <p>¿Ya registrado? <a class="boton invitado login" id="btnSeccionLogin">Inicie sesión</a></p>
+            </section>
+
+            <!--Ingresar -->
+            <section id="seccionLogin" class="seccion">
+                <h2>Bienvenido</h2>
+                <label for="txtUsuarioLogin">Ingrese su nombre de usuario</label>
+                <input type="text" id="txtUsuarioLogin" value="administrador1" required><br>
+
+                <label for="txtPasswordLogin">Ingrese su contraseña</label>
+                <input type="password" id="txtPasswordLogin" value="Admin1" required><br>
+
+                <p id="pErrorLogin"></p>
+                <input type="button" value="Ingresar" id="btnLogin" class="hover">
+
+                <p>¿No tienes una cuenta?<a class="boton invitado register" id="btnSeccionRegistro">Regístrate</a></p>
+            </section>
+
+            <!--Bienvenida-->
+            <section id="seccionBienvenida" class="seccion">
+                <h1 id="msjLogin"></h1>
+                <h4 id="h4Bienvenida"></h4>
+                <ul id="ulBienvenida"></ul>
+            </section>
+
+            <!--ADMIN-->
+            <!--Agregar Destino -->
+            <section id="seccionAgregar" class="seccion">
+                <h2>Agregar Destino</h2>
+                <label for="txtDestino">Ingrese el nombre del destino</label>
+                <input type="text" id="txtDestino"><br>
+
+                <label for="txtPrecio">Ingrese el precio por persona ($)</label>
+                <input type="text" id="txtPrecio"><br>
+
+                <label for="txtDescripcion">Descripcion del destino</label>
+                <textarea id="txtDescripcion" cols="20" rows="5"></textarea>
+
+                <label for="txtUrl">Url de la imagen:</label>
+                <input type="text" id="txtUrl"><br>
+
+                <label for="txtCupos">Digite cantidad de cupos disponibles:</label>
+                <input type="text" id="txtCupos"><br>
+
+                <input type="button" value="Agregar Destino" id="btnAgregarDestino" class="hover">
+                <p id="pErrorAgregar"></p>
+            </section>
+
+            <!--Listar reservas-->
+            <section id="seccionListar" class="seccion">
+                <h3>Listar reservas</h3>
+                <h4>Reservas Pendientes</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Método pago</th>
+                            <th>Cantidad de personas</th>
+                            <th>Destino</th>
+                            <th>Precio</th>
+                            <th>Cupos disponibles</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblListarPendientes"></tbody>
+                    <div id="reservaCliente"></div>
+                </table>
+
+                <h4>Reservas Aceptadas</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Método pago</th>
+                            <th>Cantidad de personas</th>
+                            <th>Destino</th>
+                            <th>Precio</th>
+                            <th>Cupos disponibles</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblListarAprobadas"></tbody>
+                </table>
+
+                <h4>Reservas Canceladas</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Método pago</th>
+                            <th>Cantidad de personas</th>
+                            <th>Destino</th>
+                            <th>Precio</th>
+                            <th>Cupos disponibles</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblListarCanceladas"></tbody>
+                </table>
+            </section>
+
+            <!--Gestionar Destinos y Ofertas-->
+            <section id="seccionGestionar" class="seccion">
+                <h3>Gestionar Destinos y Ofertas</h3>
+                <p id="pErrorGestionar"></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Descripción</th>
+                            <th>Imagen</th>
+                            <th>Cupos</th>
+                            <th>Oferta</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblDestinos">
+
+                    </tbody>
+                </table>
+            </section>
+
+            <!--Generar informe de ganancias-->
+            <section id="seccionGanancias" class="seccion">
+                <h2>Informe de Ganancias</h2>
+                <h3>Total generado en reservas ($)</h3>
+                <h4 id="totalVentas">$</h4>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Destino</th>
+                            <th>Cupos Totales</th>
+                            <th>Ganancia Total</th>
+                            <th>Ganancia Neta</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblInforme"></tbody>
+                </table>
+            </section>
+
+            <!--CLIENTE-->
+            <!--Explorar Destinos-->
+            <section id="seccionExplorar" class="seccion">
+                <p id="msjExplorar"></p>
+                <h3>Explorar Destinos</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Precio</th>
+                            <th>Oferta</th>
+                            <th>Imagen</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblExplorar"></tbody>
+                </table>
+            </section>
+
+            <!--Reservar destino-->
+            <section id="seccionReservar" class="seccion">
+                <h3>Reservar Destino</h3>
+                <div id="detalleDestino"></div>
+                <label for="txtPersonas">Digite la cantidad de personas:</label>
+                <input type="number" id="txtPersonas"><br>
+                <select id="slcPago">
+                    <option value="">Seleccione una opción..</option>
+                    <option value="saldo">Saldo</option>
+                    <option value="millas">Millas</option>
+                </select><br>
+
+                <input type="button" value="Realizar Reserva" id="btnRealizarReserva">
+            </section>
+
+            <!--Historial de reservas-->
+            <section id="seccionHistorial" class="seccion">
+                <h3>Historial de Reservas</h3>
+                <p id="msjErrorReservas"></p>
+                <table>
+                    <thead>
+                        <th>Nombre</th>
+                        <th>Cantidad de Peronas</th>
+                        <th>Monto Total ($)</th>
+                        <th>Estado</th>
+                    </thead>
+                    <tbody id="tblHistorial"></tbody>
+                </table>
+            </section>
+            <!--Destinos en oferta-->
+            <section id="seccionOfertas" class="seccion">
+                <h3>Destinos en oferta</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Precio</th>
+                            <th>Oferta</th>
+                            <th>Imagen</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblOfertas"></tbody>
+                </table>
+            </section>
+
+        </main>
+        <!-- FIN CONTENIDO -->
+        <!-- <footer>
+            <a href="https://www.ort.edu.uy">Juan Triunfo - Julian Schenck</a>
+        </footer> -->
+        <!-- FIN PIE -->
+    </div>
+    <!-- FIN CONTENEDOR -->
+
+    <script src="js/biblioteca.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
