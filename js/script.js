@@ -1,11 +1,12 @@
 class Reserva {
-    constructor(id, cliente, cantPersonas, metodoPago, destino, estado = "pendiente") {
+    constructor(id, cliente, cantPersonas, metodoPago, destino, estado = "pendiente", precio) {
         this.id = id;
         this.cliente = cliente;
         this.cantPersonas = cantPersonas;
         this.metodoPago = metodoPago;
         this.destino = destino;
         this.estado = estado;
+        this.precio = precio;
     }
 }
 
@@ -47,7 +48,7 @@ class Cliente extends Usuario {
     }
 }
 
-let idDestino = 11;
+let idDestino = 10;
 let idReserva = 5;
 let idUsuario = 10;
 
@@ -60,30 +61,30 @@ class Sistema {
             new Admin(2, "administrador3", "Admin3"),
             new Admin(3, "administrador4", "Admin4",),
             new Admin(4, "administrador5", "Admin5",),
-            new Cliente(5, "juantriunfo05", "Juan123", 150000, "5462-9964-5792-8533", 455, 0),
+            new Cliente(5, "juantriunfo05", "Juan123", 15000, "5462-9964-5792-8533", 455, 0),
             new Cliente(6, "julianschenck10", "Julian123", 15000, "9563-2368-0757-2352", 323, 0),
             new Cliente(7, "lionelmessi10", "Messi123", 15000, "4783-9683-1367-3624", 774, 0),
             new Cliente(8, "cristianoronaldo07", "Ronaldo123", 15000, "6347-0579-4734-8024", 924, 0),
             new Cliente(9, "neymarjunior11", "Neymar123", 150000, "7563-4763-5483-7732", 229, 0),
         ]
         this.destinos = [
-            new Destino(0, "Estados Unidos", 10000, "Es un país diverso, influyente, con cultura rica, paisajes variados y economía robusta.", "https://viajesporestadosunidos.wordpress.com/wp-content/uploads/2015/10/nueva-york.jpg?w=768&h=512", 20, "Activo"),
-            new Destino(1, "Uruguay", 1500, "País pequeño y tranquilo en Sudamérica, conocido por sus playas, paisajes verdes, democracia sólida y calidad de vida.", "https://www.uruguayxxi.gub.uy/uploads/estatico/mdeo01.png", 10, "Activo"),
-            new Destino(2, "Alemania", 16000, "País europeo moderno y avanzado, conocido por su historia, economía fuerte, tecnología, cultura rica y paisajes variados.", "https://www.fundssociety.com/wp-content/uploads/2024/11/Alemania.png", 100, "Pausado"),
-            new Destino(3, "Argentina", 500, "Es un país sudamericano, conocido por su tango, paisajes variados, vino y cultura vibrante", "https://static.wixstatic.com/media/4c919a_5ca88da6543a46fa95c4d6c2778e62e6~mv2.jpg/v1/fill/w_925,h_474,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/4c919a_5ca88da6543a46fa95c4d6c2778e62e6~mv2.jpg", 50, "Pausado"),
-            new Destino(4, "Brasil", 6200, "País sudamericano vibrante, famoso por su biodiversidad, playas, carnaval, cultura diversa, economía emergente y el Amazonas.", "https://destinations-cms-testing.s3.amazonaws.com/uploads/5ed7c15c5bc2430023267f2f-Los-10-Destinos-ma%CC%81s-elegidos-para-viajar-a-Brasil-en-vacaciones-main.jpg", 2, "Activo"),
-            new Destino(5, "Chile", 9000, "Es un país largo y estrecho, famoso por su vino, paisajes andinos y diversa cultura.", "https://mayurutour.com/wp-content/uploads/2020/01/Salar-de-surire.jpg", 47, "Pausado"),
-            new Destino(6, "Venezuela", 4000, "País sudamericano con paisajes diversos, rica biodiversidad, cultura vibrante, recursos naturales abundantes y una destacada tradición musical", "https://www.iberia.com/wcs/imagenes/vuelos_baratos/util/VE-info.jpg", 99, "Activo"),
-            new Destino(7, "Bolivia", 25000, "Paisajes asombrosos, Salar de Uyuni, cultura diversa, Andes, Amazonía, historia rica, tradiciones vibrantes, biodiversidad", "https://denomades.s3.us-west-2.amazonaws.com/blog/wp-content/uploads/2017/08/02155322/t6GDFbc.jpg", 23, "Activo"),
-            new Destino(8, "Colombia", 1000, "Diversidad cultural, paisajes exuberantes, café reconocido, Caribe, Andes, Amazonía, biodiversidad, música, historia rica, tradiciones vivas", "https://www.semana.com/resizer/v2/QDMHUDB52FGG7A3NX5SXHFHJOU.jpg?auth=fb8fce39a9ee1531e465e7754444d618c1392deb89de6179b9b40e3d9f0f52d0&smart=true&quality=75&width=1280&height=720", 140, "Activo"),
-            new Destino(9, "China", 30000, "Cultura milenaria, Gran Muralla, ciudades vibrantes, innovación, paisajes variados, historia rica, tradiciones, gastronomía diversa", "https://cdn.britannica.com/20/20120-050-89764C76/Tiananmen-entryway-Imperial-City-China-Beijing.jpg?w=300", 77, "Activo"),
+            new Destino("DEST_ID_" + 0, "Estados Unidos", 10000, "Es un país diverso, influyente, con cultura rica, paisajes variados y economía robusta.", "https://viajesporestadosunidos.wordpress.com/wp-content/uploads/2015/10/nueva-york.jpg?w=768&h=512", 20, "Activo"),
+            new Destino("DEST_ID_" + 1, "Uruguay", 1500, "País pequeño y tranquilo en Sudamérica, conocido por sus playas, paisajes verdes, democracia sólida y calidad de vida.", "https://www.uruguayxxi.gub.uy/uploads/estatico/mdeo01.png", 10, "Activo"),
+            new Destino("DEST_ID_" + 2, "Alemania", 16000, "País europeo moderno y avanzado, conocido por su historia, economía fuerte, tecnología, cultura rica y paisajes variados.", "https://www.fundssociety.com/wp-content/uploads/2024/11/Alemania.png", 100, "Pausado"),
+            new Destino("DEST_ID_" + 3, "Argentina", 500, "Es un país sudamericano, conocido por su tango, paisajes variados, vino y cultura vibrante", "https://static.wixstatic.com/media/4c919a_5ca88da6543a46fa95c4d6c2778e62e6~mv2.jpg/v1/fill/w_925,h_474,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/4c919a_5ca88da6543a46fa95c4d6c2778e62e6~mv2.jpg", 50, "Pausado"),
+            new Destino("DEST_ID_" + 4, "Brasil", 6200, "País sudamericano vibrante, famoso por su biodiversidad, playas, carnaval, cultura diversa, economía emergente y el Amazonas.", "https://destinations-cms-testing.s3.amazonaws.com/uploads/5ed7c15c5bc2430023267f2f-Los-10-Destinos-ma%CC%81s-elegidos-para-viajar-a-Brasil-en-vacaciones-main.jpg", 2, "Activo"),
+            new Destino("DEST_ID_" + 5, "Chile", 9000, "Es un país largo y estrecho, famoso por su vino, paisajes andinos y diversa cultura.", "https://mayurutour.com/wp-content/uploads/2020/01/Salar-de-surire.jpg", 47, "Pausado"),
+            new Destino("DEST_ID_" + 6, "Venezuela", 4000, "País sudamericano con paisajes diversos, rica biodiversidad, cultura vibrante, recursos naturales abundantes y una destacada tradición musical", "https://www.iberia.com/wcs/imagenes/vuelos_baratos/util/VE-info.jpg", 99, "Activo"),
+            new Destino("DEST_ID_" + 7, "Bolivia", 25000, "Paisajes asombrosos, Salar de Uyuni, cultura diversa, Andes, Amazonía, historia rica, tradiciones vibrantes, biodiversidad", "https://denomades.s3.us-west-2.amazonaws.com/blog/wp-content/uploads/2017/08/02155322/t6GDFbc.jpg", 23, "Activo"),
+            new Destino("DEST_ID_" + 8, "Colombia", 1000, "Diversidad cultural, paisajes exuberantes, café reconocido, Caribe, Andes, Amazonía, biodiversidad, música, historia rica, tradiciones vivas", "https://www.semana.com/resizer/v2/QDMHUDB52FGG7A3NX5SXHFHJOU.jpg?auth=fb8fce39a9ee1531e465e7754444d618c1392deb89de6179b9b40e3d9f0f52d0&smart=true&quality=75&width=1280&height=720", 140, "Activo"),
+            new Destino("DEST_ID_" + 9, "China", 30000, "Cultura milenaria, Gran Muralla, ciudades vibrantes, innovación, paisajes variados, historia rica, tradiciones, gastronomía diversa", "https://cdn.britannica.com/20/20120-050-89764C76/Tiananmen-entryway-Imperial-City-China-Beijing.jpg?w=300", 77, "Activo"),
         ]
         this.reservasPendientes = [
-            new Reserva(0, this.usuarios[5], 10, "millas", this.destinos[1]),
-            new Reserva(1, this.usuarios[8], 1, "saldo", this.destinos[0]),
-            new Reserva(2, this.usuarios[7], 7, "millas", this.destinos[2]),
-            new Reserva(3, this.usuarios[6], 5, "saldo", this.destinos[7]),
-            new Reserva(4, this.usuarios[9], 8, "millas", this.destinos[8])
+            new Reserva(0, this.usuarios[5], 10, "millas", this.destinos[1], "pendiente", 1500),
+            new Reserva(1, this.usuarios[8], 1, "saldo", this.destinos[0], "pendiente", 10000),
+            new Reserva(2, this.usuarios[7], 7, "millas", this.destinos[2], "pendiente", 16000),
+            new Reserva(3, this.usuarios[6], 5, "saldo", this.destinos[7], "pendiente", 25000),
+            new Reserva(4, this.usuarios[9], 8, "millas", this.destinos[8], "pendiente", 1000)
         ];
         this.reservasAprobadas = [];
         this.reservasCanceladas = [];
@@ -120,7 +121,7 @@ class Sistema {
         for (let i = 0; i < this.reservasAprobadas.length; i++) {
             const reserva = this.reservasAprobadas[i];
             if (reserva.destino.id === destinoId) {
-                gananciaTotal += reserva.destino.precio * reserva.cantPersonas;
+                gananciaTotal += reserva.precio * reserva.cantPersonas;
             }
         }
         return gananciaTotal;
@@ -131,7 +132,7 @@ class Sistema {
         for (let i = 0; i < this.reservasAprobadas.length; i++) {
             const reserva = this.reservasAprobadas[i];
             if (reserva.destino.id === destinoId && reserva.metodoPago === "saldo") {
-                gananciaNeta += reserva.destino.precio * reserva.cantPersonas;
+                gananciaNeta += reserva.precio * reserva.cantPersonas;
             }
         }
         return gananciaNeta;
@@ -141,7 +142,7 @@ class Sistema {
         let totalGanancia = 0;
         for (let i = 0; i < this.reservasAprobadas.length; i++) {
             const reserva = this.reservasAprobadas[i];
-            totalGanancia += reserva.destino.precio * reserva.cantPersonas;
+            totalGanancia += reserva.precio * reserva.cantPersonas;
         }
         return totalGanancia;
     }
@@ -154,7 +155,7 @@ class Sistema {
 
         if (destino.estado !== "Pausado") {
             if (reserva.estado === "pendiente") {
-                let costoTotal = destino.precio * reserva.cantPersonas;
+                let costoTotal = reserva.precio * reserva.cantPersonas;
 
                 // Pago solo con millas
                 if (reserva.metodoPago === "millas") {
@@ -283,7 +284,7 @@ function cambiarSeccion(idSeccionDestino) {
             verHistorial();
             break;
         case "seccionOfertas":
-            destinosEnOferta();            
+            destinosEnOferta();
     }
 }
 
@@ -429,7 +430,7 @@ function agregarDestinos() {
 
     //Verificar si existe el nombre del destino
     if (!obtenerElemento(sistema.destinos, "nombre", nombre)) {
-        sistema.destinos.push(new Destino(idDestino++, nombre, precio, descripcion, url, cupos, "Activo"));
+        sistema.destinos.push(new Destino("DEST_ID_" + idDestino++, nombre, precio, descripcion, url, cupos, "Activo"));
         document.querySelector("#pErrorAgregar").innerHTML = "¡Destino agregado exitosamente!";
         limpiarCampos();
     } else {
@@ -458,9 +459,9 @@ function listarReservas() {
         <td>${reservaPendiente.metodoPago}</td>
         <td>${reservaPendiente.cantPersonas}</td>
         <td>${reservaPendiente.destino.nombre}</td>
-        <td>$ ${reservaPendiente.destino.precio}</td>
+        <td>$ ${reservaPendiente.precio}</td>
         <td>${reservaPendiente.destino.cupos}</td>
-        <td>${(reservaPendiente.estado).toUpperCase()}</td>
+        <td>${reservaPendiente.estado.toUpperCase()}</td>
         <td><input type="button" value="Procesar Reserva" class="btnReserva hover" data-reserva="${reservaPendiente.id}"/></td>
         </tr>
         `;
@@ -476,7 +477,7 @@ function listarReservas() {
         <td>${reservaAprobada.metodoPago}</td>
         <td>${reservaAprobada.cantPersonas}</td>
         <td>${reservaAprobada.destino.nombre}</td>
-        <td>$ ${reservaAprobada.destino.precio}</td>
+        <td>$ ${reservaAprobada.precio}</td>
         <td>${reservaAprobada.destino.cupos}</td>
         <td style="color: green;">${(reservaAprobada.estado).toUpperCase()}</td>
         </tr>
@@ -493,7 +494,7 @@ function listarReservas() {
         <td>${reservaCancelada.metodoPago}</td>
         <td>${reservaCancelada.cantPersonas}</td>
         <td>${reservaCancelada.destino.nombre}</td>
-        <td>$ ${reservaCancelada.destino.precio}</td>
+        <td>$ ${reservaCancelada.precio}</td>
         <td>${reservaCancelada.destino.cupos}</td>
         <td style="color: red;">${(reservaCancelada.estado).toUpperCase()}</td>
         </tr>
@@ -851,7 +852,7 @@ function realizarReserva() {
         }
 
         if (destinoSeleccionado) {
-            const nuevaReserva = new Reserva(idReserva++, sistema.usuarioLogeado, cantPersonas, metodoPago, destinoSeleccionado, "pendiente");
+            const nuevaReserva = new Reserva(idReserva++, sistema.usuarioLogeado, cantPersonas, metodoPago, destinoSeleccionado, "pendiente", destinoSeleccionado.precio);
 
             sistema.reservasPendientes.push(nuevaReserva);
             sistema.historialReservas.push(nuevaReserva);
@@ -941,5 +942,5 @@ function destinosEnOferta() {
             clickReserva(destinoId);
         });
     }
-    
+
 }
