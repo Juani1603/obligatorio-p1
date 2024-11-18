@@ -281,7 +281,7 @@ function cambiarSeccion(idSeccionDestino) {
             listarReservas();
             break;
         case "seccionHistorial":
-            verHistorial();
+            verHistorial(sistema.usuarioLogeado);
             break;
         case "seccionOfertas":
             destinosEnOferta();
@@ -631,7 +631,7 @@ function gestionarDestinos() {
 //Aplicar descuento con checkbox
 function aplicarDescuento(precioDestino, idDestino, checkeado) {
     let precio = obtenerElemento(sistema.destinos, "precio", precioDestino);
-    let destino = obtenerElemento(sistema.destinos, "id", Number(idDestino));
+    let destino = obtenerElemento(sistema.destinos, "id", idDestino);
     let destinoNombre = precio.nombre;
     let precioCelda = document.querySelector(`.precioDescuento[data-idprecio="${idDestino}"]`);
     let precioOriginal = Number(precioDestino);
@@ -687,7 +687,7 @@ function agregarCupos(idDestino) {
 
 //Cambiar estado de destinos
 function cambiarEstado(idDestino, nuevoEstado) {
-    let destino = obtenerElemento(sistema.destinos, "id", Number(idDestino));
+    let destino = obtenerElemento(sistema.destinos, "id", idDestino);
 
     if (destino) {
         destino.estado = nuevoEstado;
@@ -839,7 +839,7 @@ document.querySelector("#btnRealizarReserva").addEventListener("click", realizar
 function realizarReserva() {
     let cantPersonas = Number(document.querySelector("#txtPersonas").value);
     let metodoPago = document.querySelector("#slcPago").value;
-    let destinoId = Number(document.querySelector("#detalleDestino div").getAttribute("data-destinoid"));
+    let destinoId = document.querySelector("#detalleDestino div").getAttribute("data-destinoid");
 
     if (metodoPago !== "" && cantPersonas > 0) {
         let destinoSeleccionado = null;
@@ -865,22 +865,24 @@ function realizarReserva() {
 }
 
 //Función Ver Historial
-function verHistorial() {
+function verHistorial(usuarioLogeado) {
     document.querySelector("#tblHistorial").innerHTML = "";
     let montoTotal = 0;
 
     for (let i = 0; i < sistema.historialReservas.length; i++) {
         const reserva = sistema.historialReservas[i];
         montoTotal = reserva.destino.precio * reserva.cantPersonas;
-        document.querySelector("#tblHistorial").innerHTML += `
-        <tr>
-        <td>${reserva.destino.nombre}</td>
-        <td>${reserva.cantPersonas}</td>
-        <td>${montoTotal}</td>
-        <td style="color: ${reserva.estado === "aprobada" ? "green" : "red"};">${reserva.estado}</td>
-        <td><input type="button" value="Cancelar" class="btnCancelar" data-reservaid="${reserva.id}"</td>
-        </tr>
-        `;
+        if (reserva.cliente.nombreUsuario === usuarioLogeado.nombreUsuario) {
+            document.querySelector("#tblHistorial").innerHTML += `
+            <tr>
+            <td>${reserva.destino.nombre}</td>
+            <td>${reserva.cantPersonas}</td>
+            <td>$ ${montoTotal}</td>
+            <td style="color: ${reserva.estado === "aprobada" ? "green" : "red"};">${reserva.estado}</td>
+            <td><input type="button" value="Cancelar" class="btnCancelar" data-reservaid="${reserva.id}"</td>
+            </tr>
+            `;
+        }
     }
 
     let botonesCancelar = document.querySelectorAll(".btnCancelar");
@@ -913,7 +915,7 @@ function cancelarReserva(reservaId) {
             document.querySelector("#msjErrorReservas").innerHTML = "Error, esta reserva ya fué procesada y no puede ser cancelada.";
         }
     }
-    verHistorial();
+    verHistorial(sistema.usuarioLogeado);
 }
 
 function destinosEnOferta() {
